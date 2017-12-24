@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		280FE0821FEF2025000795BE /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0811FEF2025000795BE /* Stop.swift */; };
+		280FE0841FEF2191000795BE /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0831FEF2191000795BE /* Route.swift */; };
+		280FE0861FEF22D8000795BE /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0851FEF22D8000795BE /* Prediction.swift */; };
+		280FE0881FEF3CF8000795BE /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0871FEF3CF8000795BE /* JSONParser.swift */; };
+		280FE08A1FEF468D000795BE /* BongoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0891FEF468D000795BE /* BongoAPI.swift */; };
+		280FE08C1FEF749B000795BE /* StopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08B1FEF749B000795BE /* StopsTableViewCell.swift */; };
+		280FE08E1FEF7967000795BE /* RoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */; };
+		280FE0901FEF7ABB000795BE /* RoutesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */; };
+		280FE0921FEF802F000795BE /* RoutesInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0911FEF802F000795BE /* RoutesInfoTableViewController.swift */; };
 		283A2F601FEF15380027FB75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F5F1FEF15380027FB75 /* AppDelegate.swift */; };
-		283A2F621FEF15380027FB75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F611FEF15380027FB75 /* ViewController.swift */; };
+		283A2F621FEF15380027FB75 /* StopsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F611FEF15380027FB75 /* StopsTableViewController.swift */; };
 		283A2F651FEF15380027FB75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 283A2F631FEF15380027FB75 /* Main.storyboard */; };
 		283A2F671FEF15380027FB75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 283A2F661FEF15380027FB75 /* Assets.xcassets */; };
 		283A2F6A1FEF15380027FB75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 283A2F681FEF15380027FB75 /* LaunchScreen.storyboard */; };
@@ -34,9 +43,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		280FE0811FEF2025000795BE /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
+		280FE0831FEF2191000795BE /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		280FE0851FEF22D8000795BE /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
+		280FE0871FEF3CF8000795BE /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
+		280FE0891FEF468D000795BE /* BongoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BongoAPI.swift; sourceTree = "<group>"; };
+		280FE08B1FEF749B000795BE /* StopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopsTableViewCell.swift; sourceTree = "<group>"; };
+		280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewController.swift; sourceTree = "<group>"; };
+		280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewCell.swift; sourceTree = "<group>"; };
+		280FE0911FEF802F000795BE /* RoutesInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesInfoTableViewController.swift; sourceTree = "<group>"; };
 		283A2F5C1FEF15380027FB75 /* Bongo Plus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bongo Plus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		283A2F5F1FEF15380027FB75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		283A2F611FEF15380027FB75 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		283A2F611FEF15380027FB75 /* StopsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopsTableViewController.swift; sourceTree = "<group>"; };
 		283A2F641FEF15380027FB75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		283A2F661FEF15380027FB75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		283A2F691FEF15380027FB75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,8 +116,17 @@
 			isa = PBXGroup;
 			children = (
 				283A2F5F1FEF15380027FB75 /* AppDelegate.swift */,
-				283A2F611FEF15380027FB75 /* ViewController.swift */,
+				283A2F611FEF15380027FB75 /* StopsTableViewController.swift */,
+				280FE08B1FEF749B000795BE /* StopsTableViewCell.swift */,
+				280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */,
+				280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */,
 				283A2F631FEF15380027FB75 /* Main.storyboard */,
+				280FE0911FEF802F000795BE /* RoutesInfoTableViewController.swift */,
+				280FE0811FEF2025000795BE /* Stop.swift */,
+				280FE0871FEF3CF8000795BE /* JSONParser.swift */,
+				280FE0891FEF468D000795BE /* BongoAPI.swift */,
+				280FE0851FEF22D8000795BE /* Prediction.swift */,
+				280FE0831FEF2191000795BE /* Route.swift */,
 				283A2F661FEF15380027FB75 /* Assets.xcassets */,
 				283A2F681FEF15380027FB75 /* LaunchScreen.storyboard */,
 				283A2F6B1FEF15380027FB75 /* Info.plist */,
@@ -259,8 +286,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				283A2F621FEF15380027FB75 /* ViewController.swift in Sources */,
+				280FE0921FEF802F000795BE /* RoutesInfoTableViewController.swift in Sources */,
+				280FE08A1FEF468D000795BE /* BongoAPI.swift in Sources */,
+				283A2F621FEF15380027FB75 /* StopsTableViewController.swift in Sources */,
+				280FE0841FEF2191000795BE /* Route.swift in Sources */,
+				280FE08E1FEF7967000795BE /* RoutesTableViewController.swift in Sources */,
+				280FE0881FEF3CF8000795BE /* JSONParser.swift in Sources */,
 				283A2F601FEF15380027FB75 /* AppDelegate.swift in Sources */,
+				280FE0861FEF22D8000795BE /* Prediction.swift in Sources */,
+				280FE0821FEF2025000795BE /* Stop.swift in Sources */,
+				280FE08C1FEF749B000795BE /* StopsTableViewCell.swift in Sources */,
+				280FE0901FEF7ABB000795BE /* RoutesTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
