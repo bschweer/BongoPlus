@@ -31,12 +31,12 @@ class RoutesTableViewCell: UITableViewCell
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.1
-        
+                
         if (route.getAgencyName() == "Cambus")
         {
             ImageView.image = UIImage(named: "Cambus")
         }
-        else if route.getAgencyName() == "Coraville Transit"
+        else if route.getAgencyName() == "Coralville Transit"
         {
             ImageView.image = UIImage(named: "Coralville")
         }

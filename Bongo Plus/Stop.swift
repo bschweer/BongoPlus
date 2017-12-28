@@ -74,6 +74,6 @@ public class Stop: NSObject, NSCoding
     
     static func ==(lhs: Stop, rhs: Stop) -> Bool
     {
-        return lhs.getStopLatitude() == rhs.getStopLatitude() && lhs.getStopLongitude() == rhs.getStopLongitude()
+        return lhs.getStopNumber() == rhs.getStopNumber()
     }
 }

@@ -16,6 +16,9 @@
 		280FE08E1FEF7967000795BE /* RoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */; };
 		280FE0901FEF7ABB000795BE /* RoutesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */; };
 		280FE0921FEF802F000795BE /* RoutesInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0911FEF802F000795BE /* RoutesInfoTableViewController.swift */; };
+		280FE0941FF01A76000795BE /* BongoLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0931FF01A76000795BE /* BongoLocationManager.swift */; };
+		280FE0961FF0D1AA000795BE /* RouteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0951FF0D1AA000795BE /* RouteInfo.swift */; };
+		280FE0981FF16DA3000795BE /* RouteInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0971FF16DA3000795BE /* RouteInfoTableViewCell.swift */; };
 		283A2F601FEF15380027FB75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F5F1FEF15380027FB75 /* AppDelegate.swift */; };
 		283A2F621FEF15380027FB75 /* StopsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F611FEF15380027FB75 /* StopsTableViewController.swift */; };
 		283A2F651FEF15380027FB75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 283A2F631FEF15380027FB75 /* Main.storyboard */; };
@@ -23,6 +26,11 @@
 		283A2F6A1FEF15380027FB75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 283A2F681FEF15380027FB75 /* LaunchScreen.storyboard */; };
 		283A2F751FEF15380027FB75 /* Bongo_PlusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F741FEF15380027FB75 /* Bongo_PlusTests.swift */; };
 		283A2F801FEF15390027FB75 /* Bongo_PlusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F7F1FEF15390027FB75 /* Bongo_PlusUITests.swift */; };
+		2843EB621FF36124001E4655 /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2843EB611FF36124001E4655 /* FavoritesTableViewController.swift */; };
+		287F6C701FF42C3F00C4E94C /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287F6C6F1FF42C3F00C4E94C /* InformationViewController.swift */; };
+		287F6C741FF4615A00C4E94C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287F6C731FF4615A00C4E94C /* TabBarViewController.swift */; };
+		28C107CE1FF2C962005317EC /* PredictionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C107CD1FF2C962005317EC /* PredictionTableViewController.swift */; };
+		28C107D01FF2D023005317EC /* PredictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C107CF1FF2D023005317EC /* PredictionTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +60,9 @@
 		280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewController.swift; sourceTree = "<group>"; };
 		280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewCell.swift; sourceTree = "<group>"; };
 		280FE0911FEF802F000795BE /* RoutesInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesInfoTableViewController.swift; sourceTree = "<group>"; };
+		280FE0931FF01A76000795BE /* BongoLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BongoLocationManager.swift; sourceTree = "<group>"; };
+		280FE0951FF0D1AA000795BE /* RouteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfo.swift; sourceTree = "<group>"; };
+		280FE0971FF16DA3000795BE /* RouteInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfoTableViewCell.swift; sourceTree = "<group>"; };
 		283A2F5C1FEF15380027FB75 /* Bongo Plus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bongo Plus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		283A2F5F1FEF15380027FB75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		283A2F611FEF15380027FB75 /* StopsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopsTableViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +76,11 @@
 		283A2F7B1FEF15390027FB75 /* Bongo PlusUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bongo PlusUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		283A2F7F1FEF15390027FB75 /* Bongo_PlusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bongo_PlusUITests.swift; sourceTree = "<group>"; };
 		283A2F811FEF15390027FB75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2843EB611FF36124001E4655 /* FavoritesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewController.swift; sourceTree = "<group>"; };
+		287F6C6F1FF42C3F00C4E94C /* InformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
+		287F6C731FF4615A00C4E94C /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		28C107CD1FF2C962005317EC /* PredictionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionTableViewController.swift; sourceTree = "<group>"; };
+		28C107CF1FF2D023005317EC /* PredictionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,12 +137,20 @@
 				280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */,
 				280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */,
 				283A2F631FEF15380027FB75 /* Main.storyboard */,
+				287F6C731FF4615A00C4E94C /* TabBarViewController.swift */,
+				2843EB611FF36124001E4655 /* FavoritesTableViewController.swift */,
+				287F6C6F1FF42C3F00C4E94C /* InformationViewController.swift */,
 				280FE0911FEF802F000795BE /* RoutesInfoTableViewController.swift */,
+				28C107CD1FF2C962005317EC /* PredictionTableViewController.swift */,
+				28C107CF1FF2D023005317EC /* PredictionTableViewCell.swift */,
+				280FE0971FF16DA3000795BE /* RouteInfoTableViewCell.swift */,
+				280FE0931FF01A76000795BE /* BongoLocationManager.swift */,
 				280FE0811FEF2025000795BE /* Stop.swift */,
 				280FE0871FEF3CF8000795BE /* JSONParser.swift */,
 				280FE0891FEF468D000795BE /* BongoAPI.swift */,
 				280FE0851FEF22D8000795BE /* Prediction.swift */,
 				280FE0831FEF2191000795BE /* Route.swift */,
+				280FE0951FF0D1AA000795BE /* RouteInfo.swift */,
 				283A2F661FEF15380027FB75 /* Assets.xcassets */,
 				283A2F681FEF15380027FB75 /* LaunchScreen.storyboard */,
 				283A2F6B1FEF15380027FB75 /* Info.plist */,
@@ -288,15 +312,23 @@
 			files = (
 				280FE0921FEF802F000795BE /* RoutesInfoTableViewController.swift in Sources */,
 				280FE08A1FEF468D000795BE /* BongoAPI.swift in Sources */,
+				280FE0941FF01A76000795BE /* BongoLocationManager.swift in Sources */,
+				280FE0981FF16DA3000795BE /* RouteInfoTableViewCell.swift in Sources */,
+				2843EB621FF36124001E4655 /* FavoritesTableViewController.swift in Sources */,
 				283A2F621FEF15380027FB75 /* StopsTableViewController.swift in Sources */,
 				280FE0841FEF2191000795BE /* Route.swift in Sources */,
 				280FE08E1FEF7967000795BE /* RoutesTableViewController.swift in Sources */,
 				280FE0881FEF3CF8000795BE /* JSONParser.swift in Sources */,
 				283A2F601FEF15380027FB75 /* AppDelegate.swift in Sources */,
+				28C107CE1FF2C962005317EC /* PredictionTableViewController.swift in Sources */,
 				280FE0861FEF22D8000795BE /* Prediction.swift in Sources */,
+				280FE0961FF0D1AA000795BE /* RouteInfo.swift in Sources */,
+				287F6C741FF4615A00C4E94C /* TabBarViewController.swift in Sources */,
+				28C107D01FF2D023005317EC /* PredictionTableViewCell.swift in Sources */,
 				280FE0821FEF2025000795BE /* Stop.swift in Sources */,
 				280FE08C1FEF749B000795BE /* StopsTableViewCell.swift in Sources */,
 				280FE0901FEF7ABB000795BE /* RoutesTableViewCell.swift in Sources */,
+				287F6C701FF42C3F00C4E94C /* InformationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +497,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PSA882ZPWY;
 				INFOPLIST_FILE = "Bongo Plus/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schweer.Bongo-Plus";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -480,6 +513,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PSA882ZPWY;
 				INFOPLIST_FILE = "Bongo Plus/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schweer.Bongo-Plus";
 				PRODUCT_NAME = "$(TARGET_NAME)";

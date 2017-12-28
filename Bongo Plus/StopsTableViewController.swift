@@ -10,12 +10,9 @@ import UIKit
 
 class StopsTableViewController: UITableViewController
 {
-    private let searchController = UISearchController(searchResultsController: nil)
-
-    
     private var allStops = [Stop]()
     private var filteredStops = [Stop]()
-   /////// private let globalDataStopToModify = StopsGlobalData.sharedInstance.selectedStops
+    private let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad()
     {
@@ -38,8 +35,7 @@ class StopsTableViewController: UITableViewController
         
         allStops = BongoAPI.getAllStopsFromAPI()
 
-        
-        /*if traitCollection.forceTouchCapability == .available
+        if traitCollection.forceTouchCapability == .available
         {
             registerForPreviewing(with: self, sourceView: tableView)
         }
@@ -47,9 +43,8 @@ class StopsTableViewController: UITableViewController
         if traitCollection.forceTouchCapability == .available
         {
             registerForPreviewing(with: self, sourceView: tableView)
-        }*/
+        }
     }
-    
     
     func searchBarIsEmpty()->Bool
     {
@@ -76,55 +71,31 @@ class StopsTableViewController: UITableViewController
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)->Int
     {
-        if isFiltering()
-        {
-            return filteredStops.count
-        }
-        
-        return allStops.count
+        return isFiltering() ? filteredStops.count : allStops.count
     }
     
-    
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?
-    {/*
-        if isFiltering()
-        {
-            let stop = filteredStops[indexPath.row]
-            
-            globalDataStopToModify.stoptitle = stop.stoptitle!
-            globalDataStopToModify.stopnumber = stop.stopnumber!
-            globalDataStopToModify.stoplat = stop.stoplat!
-            globalDataStopToModify.stoplng = stop.stoplng!
+    {
+        let selectedStop = isFiltering() ? filteredStops[indexPath.row] : allStops[indexPath.row]
+        
+        guard let predictionVC = storyboard?.instantiateViewController(withIdentifier: "PredictionTableViewController") as? PredictionTableViewController else {return nil}
+        
+        predictionVC.stop = selectedStop
+        
+        DispatchQueue.main.async {
+            self.navigationController?.pushViewController(predictionVC, animated: true)
         }
-        else
-        {
-            let stop = stops[indexPath.row]
-            globalDataStopToModify.stoptitle = stop.stoptitle!
-            globalDataStopToModify.stopnumber = stop.stopnumber!
-            globalDataStopToModify.stoplat = stop.stoplat!
-            globalDataStopToModify.stoplng = stop.stoplng!
-        }*/
         
         return indexPath
     }
     
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Stopscell", for: indexPath) as! StopsTableViewCell
         
-        if isFiltering()
-        {
-            let stop = filteredStops[indexPath.row]
-            cell.stop = stop
-        }
-        else
-        {
-            let stop = allStops[indexPath.row]
-            cell.stop = stop
-        }
-        
+        cell.stop = isFiltering() ? filteredStops[indexPath.row] : allStops[indexPath.row]
         return cell
     }
 }
@@ -137,31 +108,27 @@ extension StopsTableViewController: UISearchResultsUpdating
     }
 }
 
-/*
+// Add support for 3D Touch
 extension StopsTableViewController : UIViewControllerPreviewingDelegate
 {
-    // peak
+    // Peak
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController?
     {
         guard let indexPath = tableView.indexPathForRow(at: location),
             let cell = tableView.cellForRow(at: indexPath) as? StopsTableViewCell
             else{return nil}
         
-        let identifier = "StopPredictionTableViewController"
+        guard let predictionVC = storyboard?.instantiateViewController(withIdentifier: "PredictionTableViewController") as? PredictionTableViewController else {return nil}
         
-        guard let StopsVC = storyboard?.instantiateViewController(withIdentifier: identifier) as? StopPredictionTableViewController else {return nil}
-        
-        StopsVC.StopData = cell.stop
-        
+        predictionVC.stop = cell.stop
         previewingContext.sourceRect = cell.frame
         
-        return StopsVC
+        return predictionVC
     }
     
-    //pop
+    // Pop
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController)
     {
         self.navigationController?.pushViewController(viewControllerToCommit, animated: true)
     }
 }
-*/

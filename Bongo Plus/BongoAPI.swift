@@ -11,10 +11,10 @@ import Foundation
 public class BongoAPI
 {
     private static let prefix = "https://api.ebongo.org/"
-    private static let apiKey = "XXXX"
+    private static let apiKey = "api_key=XXXX"
     
-    private static let allRoutesURL: String = prefix + "routelist?api_key=" + apiKey
-    private static let allStopsURL: String = prefix + "stoplist?api_key=" + apiKey
+    private static let allRoutesURL: String = prefix + "routelist?" + apiKey
+    private static let allStopsURL: String = prefix + "stoplist?" + apiKey
 
     
     private static var allRoutes = [Route]()
@@ -48,6 +48,20 @@ public class BongoAPI
         return allStops
     }
     
+    public static func getRouteInfo(agency: String, routeID: Int)->RouteInfo
+    {
+        let url = prefix + "route?agency=" + agency + "&route=\(routeID)&" + apiKey
+        let dictionary = makeRequest(url: url)
+        
+        return JSONParser.getRouteInfo(jsonDictionary: dictionary)
+    }
+    
+    public static func getPredictions(stopNumber: String)->[Prediction]
+    {
+        let url = prefix + "prediction?stopid=" + stopNumber + "&" + apiKey
+        let dictionary = makeRequest(url: url)
+        return JSONParser.getPredictions(jsonDictionary: dictionary)
+    }
     
     private static func makeRequest(url: String)->[String:AnyObject]
     {
@@ -71,8 +85,8 @@ public class BongoAPI
         while(dictionary.count == 0)
         {
             count += 1
-            usleep(50000)
-            if count > 50
+            usleep(10000)
+            if count > 250
             {
                 break
             }

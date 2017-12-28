@@ -25,6 +25,15 @@ public class Prediction
         self.agencyName = agencyName
     }
     
+    public init(dictionary: [String : AnyObject])
+    {
+        self.routeName = dictionary["title"] as! String
+        self.prediction = dictionary["minutes"] as! Int
+        self.direction = dictionary["direction"] as! String
+        self.agency = dictionary["agency"] as! String
+        self.agencyName = dictionary["agencyName"] as! String
+    }
+    
     public func getRouteName()->String
     {
         return self.routeName

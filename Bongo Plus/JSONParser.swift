@@ -6,15 +6,13 @@
 //  Copyright © 2017 Brian Schweer. All rights reserved.
 //
 
-import Foundation
+import MapKit
 
 public class JSONParser
 {
     public static func getAllRoutes(jsonDictionary: [String : AnyObject])->[Route]
     {
         var allRoutes = [Route]()
-        print("dictionary: ")
-        print(jsonDictionary.keys)
         let routesDictionaries = jsonDictionary["routes"] as! [[String : AnyObject]]
         
         for routeDictionary in routesDictionaries
@@ -30,7 +28,7 @@ public class JSONParser
     public static func getAllStops(jsonDictionary: [String : AnyObject])->[Stop]
     {
         var allStops = [Stop]()
-        let stopsDictionaries = jsonDictionary["stops"] as! [[String:AnyObject]]
+        let stopsDictionaries = jsonDictionary["stops"] as! [[String : AnyObject]]
         
         for stopDictionary in stopsDictionaries
         {
@@ -40,5 +38,59 @@ public class JSONParser
         }
         
         return allStops
+    }
+    
+    public static func getRouteInfo(jsonDictionary: [String : AnyObject])->RouteInfo
+    {
+        let routeDictionary = jsonDictionary["route"] as! [String : AnyObject]
+        
+        let routeInfo = RouteInfo(routeName: routeDictionary["name"] as! String)
+        
+        // Add the route path coordinates
+        let points = routeDictionary["paths"] as! [[String : AnyObject]]
+        for point in points
+        {
+            let pointList = point["points"] as! [[String:AnyObject]]
+            
+            for singlepoint in pointList
+            {
+                let lat = singlepoint["lat"] as! Double
+                let lng = singlepoint["lng"] as! Double
+                routeInfo.addCoordinate(location: CLLocationCoordinate2D(latitude: lat, longitude: lng))
+            }
+        }
+        
+        // Add the stops on this route
+        let stops = routeDictionary["directions"] as! [[String : AnyObject]]
+        for stop in stops
+        {
+            let s = stop["stops"] as! [[String : AnyObject]]
+            
+            for stopInfomation in s
+            {
+                routeInfo.addStop(stop: Stop(dictionary: stopInfomation as [String : AnyObject]))
+            }
+        }
+        
+        return routeInfo
+    }
+    
+    public static func getPredictions(jsonDictionary: [String : AnyObject])->[Prediction]
+    {
+        var predictions = [Prediction]()
+        let predictionsDictionary = jsonDictionary["predictions"] as! [[String : AnyObject]]
+        
+        for predictionEntry in predictionsDictionary
+        {
+            predictions.append(Prediction(dictionary: predictionEntry as [String : AnyObject]))
+        }
+        
+        
+        for p in predictions
+        {
+            print("prediction: " + p.getRouteName() + " " + String(p.getPrediction()))
+        }
+        
+        return predictions
     }
 }

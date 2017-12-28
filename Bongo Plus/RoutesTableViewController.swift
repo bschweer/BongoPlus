@@ -15,6 +15,7 @@ class RoutesTableViewController: UITableViewController
     private let searchController = UISearchController(searchResultsController: nil)
     private var filteredRoutes = [Route]()
     
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -36,51 +37,12 @@ class RoutesTableViewController: UITableViewController
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
- /*       if traitCollection.forceTouchCapability == .available
+        if traitCollection.forceTouchCapability == .available
         {
             registerForPreviewing(with: self, sourceView: tableView)
-        }*/
+        }
         
         allRoutes = BongoAPI.getAllRoutesFromAPI()
-        /*
-        
-        let todoEndpoint: String = "http://api.ebongo.org/routelist?api_key=XXXX"
-        guard let url = URL(string: todoEndpoint) else { return }
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config)
-        
-        // make the request
-        session.dataTask(with: url){
-            (data, response, error) in
-            // check for any errors
-            guard error == nil else {
-                print("error calling GET on /todos/1")
-                print(error!)
-                return
-            }
-            // make sure we got data
-            guard let responseData = data else {
-                print("Error: did not receive data")
-                return
-            }
-            // parse the result as JSON, since that's what the API provides
-            do {
-                let todo = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: AnyObject]
-                
-                self.routes = Routes.downloadBongoRoutesFromURL(jsonDictionary: todo!)
-            }
-            catch
-            {
-                print("error trying to convert data to JSON")
-                return
-            }
-            DispatchQueue.main.async() {
-                
-                self.tableView.reloadData()
-            }
-            
-            
-            }.resume()*/
     }
     
     func searchBarIsEmpty() -> Bool
@@ -110,42 +72,30 @@ class RoutesTableViewController: UITableViewController
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)->Int
     {
-        if isFiltering()
-        {
-            return filteredRoutes.count
-        }
-        
-        return allRoutes.count
+        return isFiltering() ? filteredRoutes.count : allRoutes.count
     }
     
+    private var selectedRoute: Route? = nil
+    
+    /*override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        selectedRoute = isFiltering() ? filteredRoutes[indexPath.row] : allRoutes[indexPath.row]
+    }*/
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath)->IndexPath?
     {
-       /* if isFiltering()
-        {
-            let route = filteredRoutes[indexPath.row]
-            routeglobalData.name = route.name!
-            routeglobalData.agency = route.agency!
-            routeglobalData.id =  route.id!
-            routeglobalData.agencyName = route.agencyName!
-            routeglobalData.tag = route.tag!
-            
-        }
-        else
-        {
-            let route = routes[indexPath.row]
-            routeglobalData.name = route.name!
-            routeglobalData.agency = route.agency!
-            routeglobalData.id =  route.id!
-            routeglobalData.agencyName = route.agencyName!
-            routeglobalData.tag = route.tag!
-        }*/
+        selectedRoute = isFiltering() ? filteredRoutes[indexPath.row] : allRoutes[indexPath.row]
         
+        guard let routeInfoVC = storyboard?.instantiateViewController(withIdentifier: "RouteInfoTableViewController") as? RouteInfoTableViewController else {return nil}
+        routeInfoVC.route = selectedRoute
+        
+         DispatchQueue.main.async {
+            self.navigationController?.pushViewController(routeInfoVC, animated: true)
+        }
         return indexPath
     }
-    
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)-> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Routecell", for: indexPath)as! RoutesTableViewCell
         
@@ -166,39 +116,34 @@ class RoutesTableViewController: UITableViewController
 
 extension RoutesTableViewController: UISearchResultsUpdating
 {
-    // MARK: - UISearchResultsUpdating Delegate
-    func updateSearchResults(for searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController)
+    {
         filterContentForSearchText(searchController.searchBar.text!)
     }
 }
-/*
-extension RoutesTableViewController : UIViewControllerPreviewingDelegate{
-    
-    // peak
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        
+
+// Add support for 3D Touch
+extension RoutesTableViewController : UIViewControllerPreviewingDelegate
+{
+    // Peak
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController?
+    {
         guard let indexPath = tableView.indexPathForRow(at: location),
             let cell = tableView.cellForRow(at: indexPath) as? RoutesTableViewCell
             else{return nil}
         
-        let identifier = "RouteInfoTableViewController"
+        guard let routeInfoVC = storyboard?.instantiateViewController(withIdentifier: "RouteInfoTableViewController") as? RouteInfoTableViewController else {return nil}
         
-        guard let RoutesVC = storyboard?.instantiateViewController(withIdentifier: identifier) as? RouteInfoTableViewController else {return nil}
-        
-        RoutesVC.routeData = cell.route
-        
+        routeInfoVC.route = cell.route
         previewingContext.sourceRect = cell.frame
         
-        
-        return RoutesVC
+        return routeInfoVC
     }
     
-    //pop
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        
+    // Pop
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController)
+    {
         self.navigationController?.pushViewController(viewControllerToCommit, animated: true)
-        
     }
- 
 }
-*/
+
