@@ -60,7 +60,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private func getStopsWithin(distance searchRadius: Double, from sourceLocation: CLLocation) -> [Stop]
     {
         let allStops = BongoAPI.getAllStopsFromAPI()
-        closestStops.removeAll()
+        var closeStops = [Stop]()
         
         for stop in allStops
         {
@@ -69,11 +69,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             
             if distance < searchRadius
             {
-                closestStops.append(stop)
+                closeStops.append(stop)
             }
         }
         
-        return closestStops
+        return closeStops
     }
     
     
@@ -83,7 +83,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     @IBAction func nearbyStopsButtonPressed()
     {
-        let closestStops = getStopsWithin(distance: 350, from: bongoLocationManager.getLocation())
+        closestStops.removeAll()
+        closestStops = getStopsWithin(distance: 350, from: bongoLocationManager.getLocation())
         
         // Get rid of all old annotations
         theMap.removeAnnotations(annotations)

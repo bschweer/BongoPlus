@@ -19,6 +19,14 @@ class StopsTableViewController: UITableViewController
         super.viewDidLoad()
         self.navigationItem.title = "Stops"
         
+        BongoAPI.getAllStopsFromAPI(completion: {
+            stops in
+            self.allStops = stops
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        })
+        
         // Set up the Search Controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -32,15 +40,6 @@ class StopsTableViewController: UITableViewController
         self.tableView.separatorColor = UIColor.clear
         self.tableView.tableFooterView = UIView()
         
-        BongoAPI.getAllStopsFromAPI(completion: {
-            stops in
-            print("size of allStops in VC is: \(stops.count)")
-            self.allStops = stops
-            self.tableView.reloadData()
-            
-            
-        })
-
         if traitCollection.forceTouchCapability == .available
         {
             registerForPreviewing(with: self, sourceView: tableView)
@@ -55,9 +54,6 @@ class StopsTableViewController: UITableViewController
     {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
-        print("size of allStops in VC is: \(allStops.count)")
-        tableView.reloadData()
     }
     
     func searchBarIsEmpty()->Bool
