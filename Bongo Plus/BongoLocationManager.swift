@@ -10,17 +10,35 @@ import MapKit
 
 class BongoLocationManager
 {
-    private static let locationManager = CLLocationManager()
+    private let locationManager: CLLocationManager
+    private let downtownInterchange = CLLocation(latitude: 41.660155, longitude: -91.535925)
     
-    public static func requestAuthorization()
+    init()
+    {
+        locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+    }
+    
+    public func setDelegate(delegate: CLLocationManagerDelegate)
+    {
+        locationManager.delegate = delegate
+    }
+    
+    public func requestAuthorization()->Bool
     {
         // If we haven't received permission to access location, ask for it
         if CLLocationManager.authorizationStatus() == .notDetermined
         {
             locationManager.requestWhenInUseAuthorization()
         }
-        /*else if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
+        else if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
         {
+            locationManager.startUpdatingLocation()
+            return true
+        }
+        
+        return false
+        /*{
             locationManager.startUpdatingLocation()
             /*theMap.showsUserLocation = true
             
@@ -31,23 +49,16 @@ class BongoLocationManager
         }*/
     }
     
-    public static func getLocation()->CLLocation
+    public func getLocation()->CLLocation
     {
-        return locationManager.location ?? CLLocation(latitude: 41.660155, longitude: -91.535925)
+        return locationManager.location ?? downtownInterchange
     }
     
-    public static func centerMapOnLocation(map: MKMapView, location: CLLocation)
+    public static func centerMapOnLocation(map: MKMapView, location: CLLocation, animated: Bool)
     {
-        let regionRadius: CLLocationDistance = 8000
+        let regionRadius: CLLocationDistance = 1200
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
                                                                   regionRadius, regionRadius)
-        map.setRegion(coordinateRegion, animated: false)
-    }
-    
-    
-    
-    public static func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
-    {
-        
+        map.setRegion(coordinateRegion, animated: animated)
     }
 }

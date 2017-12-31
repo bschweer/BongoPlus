@@ -23,9 +23,34 @@ class TabBarViewController: UITabBarController
     
     override func viewWillLayoutSubviews()
     {
+        super.viewWillLayoutSubviews()
         var tabFrame = self.tabBar.frame
-        tabFrame.size.height = 50
-        tabFrame.origin.y = self.view.frame.size.height - 50
+        
+        // Adjust size of tab bar based on device type
+        let height: CGFloat
+        if UIDevice().userInterfaceIdiom == .phone
+        {
+            switch UIScreen.main.nativeBounds.height
+            {
+            case 1136: // 5S/SE
+                height = 40
+            case 1334: // 6/S/7/8
+                height = 55
+            case 2208: // 6+/S+/7+/8+
+                height = 60
+            case 2436: // X
+                height = 90
+            default: // Unknown
+                height = 50
+            }
+        }
+        else
+        {
+            height = 80
+        }
+        
+        tabFrame.size.height = height
+        tabFrame.origin.y = self.view.frame.size.height - height
         self.tabBar.frame = tabFrame
     }
 }

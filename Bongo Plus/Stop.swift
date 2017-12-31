@@ -10,10 +10,10 @@ import Foundation
 
 public class Stop: NSObject, NSCoding
 {
-    private let stopNumber: String
-    private let stopName: String
-    private let stopLatitude: Double
-    private let stopLongitude: Double
+    let stopNumber: String
+    let stopName: String
+    let stopLatitude: Double
+    let stopLongitude: Double
     
     public init(stopNumber: String, stopName: String, stopLatitude: Double, stopLongitude: Double)
     {
@@ -47,7 +47,7 @@ public class Stop: NSObject, NSCoding
         aCoder.encode(stopLongitude, forKey: "stopLongitude")
     }
     
-    public func getStopNumber()->String
+    /*public func getStopNumber()->String
     {
         return self.stopNumber
     }
@@ -65,15 +65,15 @@ public class Stop: NSObject, NSCoding
     public func getStopLongitude()->Double
     {
         return self.stopLongitude
-    }
+    }*/
     
     override public var hashValue: Int
     {
         return stopLatitude.hashValue ^ stopLongitude.hashValue &* 16777619
     }
     
-    static func ==(lhs: Stop, rhs: Stop) -> Bool
+    override public func isEqual(_ object: Any?) -> Bool
     {
-        return lhs.getStopNumber() == rhs.getStopNumber()
+        return self.stopNumber == (object as? Stop)?.stopNumber
     }
 }

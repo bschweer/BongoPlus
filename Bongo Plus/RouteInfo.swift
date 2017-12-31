@@ -10,18 +10,13 @@ import MapKit
 
 public class RouteInfo
 {
-    private let routeName: String
+    let routeName: String
     private var routePath = [CLLocationCoordinate2D]()
     private var stops = [Stop]()
     
     public init(routeName: String)
     {
         self.routeName = routeName
-    }
-    
-    public func getRouteName()->String
-    {
-        return self.routeName
     }
     
     public func getRoutePath()->[CLLocationCoordinate2D]

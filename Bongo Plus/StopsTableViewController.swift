@@ -23,8 +23,7 @@ class StopsTableViewController: UITableViewController
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Stops"
-        searchController.searchBar.barStyle = .blackOpaque
-        searchController.searchBar.barTintColor = .white
+        searchController.searchBar.barStyle = .default
         
         self.navigationItem.searchController = searchController
         definesPresentationContext = true
@@ -33,17 +32,32 @@ class StopsTableViewController: UITableViewController
         self.tableView.separatorColor = UIColor.clear
         self.tableView.tableFooterView = UIView()
         
-        allStops = BongoAPI.getAllStopsFromAPI()
+        BongoAPI.getAllStopsFromAPI(completion: {
+            stops in
+            print("size of allStops in VC is: \(stops.count)")
+            self.allStops = stops
+            self.tableView.reloadData()
+            
+            
+        })
 
         if traitCollection.forceTouchCapability == .available
         {
             registerForPreviewing(with: self, sourceView: tableView)
         }
-        
         if traitCollection.forceTouchCapability == .available
         {
             registerForPreviewing(with: self, sourceView: tableView)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        print("size of allStops in VC is: \(allStops.count)")
+        tableView.reloadData()
     }
     
     func searchBarIsEmpty()->Bool
@@ -55,7 +69,7 @@ class StopsTableViewController: UITableViewController
     func filterContentForSearchText(_ searchText: String, scope: String = "All")
     {
         filteredStops = allStops.filter({( myStop : Stop) -> Bool in
-            return (myStop.getStopName().lowercased().contains(searchText.lowercased())) || (myStop.getStopNumber().contains(searchText))
+            return (myStop.stopName.lowercased().contains(searchText.lowercased())) || (myStop.stopNumber.contains(searchText))
         })
         
         tableView.reloadData()
@@ -93,7 +107,7 @@ class StopsTableViewController: UITableViewController
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Stopscell", for: indexPath) as! StopsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StopCell", for: indexPath) as! StopCell
         
         cell.stop = isFiltering() ? filteredStops[indexPath.row] : allStops[indexPath.row]
         return cell
@@ -115,7 +129,7 @@ extension StopsTableViewController : UIViewControllerPreviewingDelegate
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController?
     {
         guard let indexPath = tableView.indexPathForRow(at: location),
-            let cell = tableView.cellForRow(at: indexPath) as? StopsTableViewCell
+            let cell = tableView.cellForRow(at: indexPath) as? StopCell
             else{return nil}
         
         guard let predictionVC = storyboard?.instantiateViewController(withIdentifier: "PredictionTableViewController") as? PredictionTableViewController else {return nil}

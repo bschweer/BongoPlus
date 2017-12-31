@@ -10,10 +10,10 @@ import Foundation
 
 public class Route: NSObject, NSCoding
 {
-    private let routeID: Int
-    private let routeName: String
-    private let agency: String
-    private let agencyName: String
+    let routeID: Int
+    let routeName: String
+    let agency: String
+    let agencyName: String
     
     public init(routeID: Int, routeName: String, agency: String, agencyName: String)
     {
@@ -33,7 +33,7 @@ public class Route: NSObject, NSCoding
     
     required public init?(coder aDecoder: NSCoder)
     {
-        routeID = aDecoder.decodeObject(forKey: "routeID") as! Int
+        routeID = Int(aDecoder.decodeCInt(forKey: "routeID"))// decodeObject(forKey: "routeID") as! Int
         routeName = aDecoder.decodeObject(forKey: "routeName") as! String
         agency = aDecoder.decodeObject(forKey: "agency") as! String
         agencyName = aDecoder.decodeObject(forKey: "agencyName") as! String
@@ -41,29 +41,14 @@ public class Route: NSObject, NSCoding
     
     public func encode(with aCoder: NSCoder)
     {
-        aCoder.encode(routeID, forKey: "routeID")
+        aCoder.encodeCInt(Int32(routeID), forKey: "routeID")// (routeID, forKey: "routeID")
         aCoder.encode(routeName, forKey: "routeName")
         aCoder.encode(agency, forKey: "agency")
         aCoder.encode(agencyName, forKey: "agencyName")
     }
     
-    public func getRouteID()->Int
+    override public func isEqual(_ object: Any?) -> Bool
     {
-        return self.routeID
-    }
-    
-    public func getRouteName()->String
-    {
-        return self.routeName
-    }
-    
-    public func getAgency()->String
-    {
-        return self.agency
-    }
-    
-    public func getAgencyName()->String
-    {
-        return self.agencyName
+        return self.routeID == (object as? Route)?.routeID
     }
 }

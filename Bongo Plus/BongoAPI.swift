@@ -38,7 +38,7 @@ public class BongoAPI
     {
         if allStops.count == 0
         {
-            let dictionary = makeRequest(url: allStopsURL)
+            let dictionary = [String:AnyObject]()//makeRequest(url: allStopsURL)
             if dictionary.count > 0
             {
                 allStops = JSONParser.getAllStops(jsonDictionary: dictionary)
@@ -48,13 +48,45 @@ public class BongoAPI
         return allStops
     }
     
+    public static func getAllStopsFromAPI(completion:  @escaping (_ stops: [Stop]) -> Void)
+    {
+        if allStops.count == 0
+        {
+            makeRequest(url: allStopsURL, completion: {
+                dictionary in
+                
+                allStops = JSONParser.getAllStops(jsonDictionary: dictionary)
+                completion(allStops)
+            })
+        }
+        else
+        {
+            completion(allStops)
+        }
+    }
+    
+    
     public static func getRouteInfo(agency: String, routeID: Int)->RouteInfo
     {
+        var dictionary = [String : AnyObject]()
+        
         let url = prefix + "route?agency=" + agency + "&route=\(routeID)&" + apiKey
-        let dictionary = makeRequest(url: url)
+        dictionary = makeRequest(url: url)
         
         return JSONParser.getRouteInfo(jsonDictionary: dictionary)
     }
+    
+    
+    public static func getRouteInfo(agency: String, routeID: Int, completion:  @escaping (_ routeInfo: RouteInfo) -> ())
+    {
+        let url = prefix + "route?agency=" + agency + "&route=\(routeID)&" + apiKey
+        makeRequest(url: url, completion: {
+            dictionary in
+            completion(JSONParser.getRouteInfo(jsonDictionary: dictionary))
+        })
+    }
+    
+    
     
     public static func getPredictions(stopNumber: String)->[Prediction]
     {
@@ -93,5 +125,31 @@ public class BongoAPI
         }
         
         return dictionary
+    }
+    
+    
+    
+    
+    private static func makeRequest(url urlString: String, completion: @escaping (_ jsonDict: [String : AnyObject]) -> ())
+    {
+        guard let url = URL(string: urlString) else { return }
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: url) {
+            (data, response, error) in
+            guard error == nil else { return }
+            // make sure we got data
+            guard let responseData = data else { return }
+
+            do {
+                guard let dictionary = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: AnyObject] else { return }
+                
+                completion(dictionary)
+            }
+            catch {
+                return
+            }
+        }
+        task.resume()
     }
 }

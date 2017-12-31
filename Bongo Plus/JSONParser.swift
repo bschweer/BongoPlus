@@ -78,19 +78,18 @@ public class JSONParser
     public static func getPredictions(jsonDictionary: [String : AnyObject])->[Prediction]
     {
         var predictions = [Prediction]()
+        if jsonDictionary.count == 0
+        {
+            return predictions
+        }
+        
         let predictionsDictionary = jsonDictionary["predictions"] as! [[String : AnyObject]]
         
         for predictionEntry in predictionsDictionary
         {
             predictions.append(Prediction(dictionary: predictionEntry as [String : AnyObject]))
         }
-        
-        
-        for p in predictions
-        {
-            print("prediction: " + p.getRouteName() + " " + String(p.getPrediction()))
-        }
-        
+
         return predictions
     }
 }

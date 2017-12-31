@@ -9,55 +9,41 @@
 import UIKit
 import MapKit
 
-class RouteInfoTableViewController: UITableViewController, MKMapViewDelegate, CLLocationManagerDelegate
+class RouteInfoTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate
 {
     @IBOutlet weak var theMap: MKMapView!
+    @IBOutlet weak var tableView: UITableView!
     
     public var route: Route? = nil
     
     private var selectedRouteInfo: RouteInfo? = nil
     private var favoriteRoutes = [Route]()
-    
-    var RouteSubList = [Route]()
-    
-    private var annotations = [MKPointAnnotation]()
-  //////////  private var locationManager = CLLocationManager()
-    
     private var isFavoriteButtonPressed = false
-    private var RouteisExisted = false
-    private var favoritesNeedUpdate = false
-
+    private var annotations = [MKPointAnnotation]()
+    private var bongoLocationManager = BongoLocationManager()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.navigationItem.title = route?.getRouteName()
+        self.navigationItem.title = route?.routeName
+        bongoLocationManager.setDelegate(delegate: self)
 
         let favoriteButton = UIBarButtonItem.init(image: UIImage(named: "like"), style: .done, target: self, action: #selector(favoriteButtonPressed))
-        
         self.navigationItem.rightBarButtonItem = favoriteButton
         
         self.tableView.separatorColor = UIColor.clear
         self.tableView.tableFooterView = UIView()
         
         
-        self.theMap.delegate = self
-        self.theMap.mapType = MKMapType.standard
+        theMap.delegate = self
+        theMap.mapType = .standard
+        theMap.showsUserLocation = true
         
-        
- 
-        
-        //locationManager.delegate = self
-        //locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        //locationManager = CLLocationManager()
-        
-        
-        /*
-        // If we haven't received permission to access location, ask for it
-        if CLLocationManager.authorizationStatus() == .notDetermined
-        {
-            locationManager.requestWhenInUseAuthorization()
-        }
-        else if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
+        bongoLocationManager.requestAuthorization()
+        BongoLocationManager.centerMapOnLocation(map: theMap, location: bongoLocationManager.getLocation(), animated: false)
+
+
+/*        else if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
         {
             locationManager.startUpdatingLocation()
             theMap.showsUserLocation = true
@@ -88,33 +74,30 @@ class RouteInfoTableViewController: UITableViewController, MKMapViewDelegate, CL
             registerForPreviewing(with: self, sourceView: tableView)
         }
         
+        self.selectedRouteInfo = BongoAPI.getRouteInfo(agency: (self.route?.agency)!, routeID: (self.route?.routeID)!)
         
         // Show route path and stops on the map
         DispatchQueue.main.async {
-            self.selectedRouteInfo = BongoAPI.getRouteInfo(agency: (self.route?.getAgency())!, routeID: (self.route?.getRouteID())!)
             self.showRoute()
             self.showAllStops()
             self.tableView.reloadData()
         }
     }
     
-    
-    
-    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         
         if let row = tableView.indexPathForSelectedRow
         {
             self.tableView.deselectRow(at: row, animated: false)
         }
         
-        if UserDefaults.standard.object(forKey: "FavoriteRoutes") != nil
+        if let udData = getFavoriteRoutesFromUD()
         {
-            let stopsData =  UserDefaults.standard.object(forKey: "FavoriteRoutes") as! Data
-            favoriteRoutes = NSKeyedUnarchiver.unarchiveObject(with: stopsData) as! [Route]
-            
+            favoriteRoutes = udData
+
             var routeIsFavorite = false
             for route in favoriteRoutes
             {
@@ -133,39 +116,23 @@ class RouteInfoTableViewController: UITableViewController, MKMapViewDelegate, CL
             else
             {
                 isFavoriteButtonPressed = false
-                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.gray
             }
         }
     }
     
-    // Save changes to favorites list if necessary
-    override func viewWillDisappear(_ animated: Bool)
-    {
-        super.viewWillDisappear(animated)
-        
-        if favoritesNeedUpdate
-        {
-            let encodedData = NSKeyedArchiver.archivedData(withRootObject: favoriteRoutes)
-            UserDefaults.standard.set(encodedData, forKey: "FavoriteRoutes")
-            UserDefaults.standard.synchronize()
-        }
-        
-        favoritesNeedUpdate = false
-    }
-    
     @objc func favoriteButtonPressed()
     {
-        favoritesNeedUpdate = true
         isFavoriteButtonPressed = !isFavoriteButtonPressed
         
         if isFavoriteButtonPressed
         {
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red:0.98, green:0.22, blue:0.35, alpha:1.0)
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 0.98, green: 0.22, blue:0.35, alpha: 1.0)
             favoriteRoutes.append(route!)
         }
         else
         {
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.gray
             
             // Remove this stop from the favorites array
             for i in 0...favoriteRoutes.count - 1
@@ -177,12 +144,11 @@ class RouteInfoTableViewController: UITableViewController, MKMapViewDelegate, CL
                 }
             }
         }
+
+        writeFavoriteRoutesToUD(favoriteRoutes: favoriteRoutes)
     }
     
-    
-    
-    
-    
+
     
     
     func centerMapOnLocation(location: CLLocation)
@@ -194,22 +160,21 @@ class RouteInfoTableViewController: UITableViewController, MKMapViewDelegate, CL
     }
     
     
-   
-    
-    
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
+    /*func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
     {
         let location = locations.last as! CLLocation
         
+        
+        /*
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.015, longitudeDelta: 0.015))
         
-        self.theMap.setRegion(region, animated: true)
-    }
+        self.theMap.setRegion(region, animated: true)(*/
+    }*/
     
     
     
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay)->MKOverlayRenderer
     {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
         renderer.strokeColor = UIColor(hue: 0.6056, saturation: 0.61, brightness: 0.69, alpha: 1.0)
@@ -247,17 +212,33 @@ class RouteInfoTableViewController: UITableViewController, MKMapViewDelegate, CL
         return pinView
     }
     
-    /*
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl)
     {
         if control == view.rightCalloutAccessoryView
         {
-            routePredictionGlobalData.stoptitle = ((view.annotation?.title)!)!
-            routePredictionGlobalData.stopnumber = ((view.annotation?.subtitle)!)!
+            var selectedStop: Stop? = nil
+            for stop in (selectedRouteInfo?.getStops())!
+            {
+                if (view.annotation?.subtitle)! == stop.stopNumber
+                {
+                    selectedStop = stop
+                    break
+                }
+            }
             
-            performSegue(withIdentifier: "routeMapToPrediction", sender: self)
+            if selectedStop == nil
+            {
+                return
+            }
+            
+            guard let predictionVC = storyboard?.instantiateViewController(withIdentifier: "PredictionTableViewController") as? PredictionTableViewController else {return}
+            predictionVC.stop = selectedStop
+            
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(predictionVC, animated: true)
+            }
         }
-    }*/
+    }
     
     
     private func showAllStops()
@@ -265,45 +246,37 @@ class RouteInfoTableViewController: UITableViewController, MKMapViewDelegate, CL
         for stopEntry in (selectedRouteInfo?.getStops())!
         {
             let newAnnotation = MKPointAnnotation()
-            newAnnotation.coordinate = CLLocationCoordinate2D(latitude: stopEntry.getStopLatitude(), longitude: stopEntry.getStopLongitude())
+            newAnnotation.coordinate = CLLocationCoordinate2D(latitude: stopEntry.stopLatitude, longitude: stopEntry.stopLongitude)
             
-            newAnnotation.title = stopEntry.getStopName()
-            newAnnotation.subtitle = stopEntry.getStopNumber()
+            newAnnotation.title = stopEntry.stopName
+            newAnnotation.subtitle = stopEntry.stopNumber
             annotations.append(newAnnotation)
         }
         
         theMap.addAnnotations(annotations)
     }
-    
-    
-    
-    
+
     private func showRoute()
     {
         let polyLine = MKPolyline(coordinates: (selectedRouteInfo?.getRoutePath())!, count: (selectedRouteInfo?.getRoutePath().count)!)
         theMap.add(polyLine, level: MKOverlayLevel.aboveLabels)
     }
-    
-    
-    
-    
-    override func numberOfSections(in tableView: UITableView)->Int
+
+    func numberOfSections(in tableView: UITableView)->Int
     {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return selectedRouteInfo?.getStops().count ?? 1
     }
     
-    
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?
     {
         let selectedStop = selectedRouteInfo?.getStops()[indexPath.row]
         
         guard let predictionVC = storyboard?.instantiateViewController(withIdentifier: "PredictionTableViewController") as? PredictionTableViewController else {return nil}
-        
         predictionVC.stop = selectedStop
         
         DispatchQueue.main.async {
@@ -313,77 +286,15 @@ class RouteInfoTableViewController: UITableViewController, MKMapViewDelegate, CL
         return indexPath
     }
     
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)-> UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)-> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RouteInfoCell", for: indexPath) as! RouteInfoTableViewCell
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StopCell", for: indexPath) as! StopCell
         let stop = selectedRouteInfo?.getStops()[indexPath.row]
         cell.stop = stop
         
         return cell
     }
-    
-    
-    /*
-    @objc func pushToFavourite()
-    {
-        if (isFavoriteButtonPressed == false)
-        {
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red:0.98, green:0.22, blue:0.35, alpha:1.0)
-            
-            if(FavoriteRoutesDefault.object(forKey: "RouteDefaults") != nil )
-            {
-                let favoriteRouteData =  FavoriteRoutesDefault.object(forKey: "RouteDefaults") as! Data
-                
-                favoriteRouteList = NSKeyedUnarchiver.unarchiveObject(with: favoriteRouteData) as! [Routes]
-                favoriteRouteList.append(routeData)
-                
-                let encodedData = NSKeyedArchiver.archivedData(withRootObject: favoriteRouteList)
-                
-                FavoriteRoutesDefault.set(encodedData, forKey: "RouteDefaults")
-                FavoriteRoutesDefault.synchronize()
-            }
-            else
-            {
-                favoriteRouteList.append(routeData)
-                
-                let encodedData = NSKeyedArchiver.archivedData(withRootObject: favoriteRouteList)
-                
-                FavoriteRoutesDefault.set(encodedData, forKey: "RouteDefaults")
-                FavoriteRoutesDefault.synchronize()
-            }
-            
-            isFavoriteButtonPressed = true
-        }
-        else
-        {
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-            
-            print("is not favorite!")
-            
-            let favoriteRouteData =  FavoriteRoutesDefault.object(forKey: "RouteDefaults") as! Data
-            
-            var favoriteRouteList = NSKeyedUnarchiver.unarchiveObject(with: favoriteRouteData) as! [Routes]
-            
-            for i in favoriteRouteList
-            {
-                if (i.id != routeData.id)
-                {
-                    RouteSubList.append(i)
-                }
-            }
-            
-            favoriteRouteList = RouteSubList
-            let encodedData = NSKeyedArchiver.archivedData(withRootObject: favoriteRouteList)
-            
-            FavoriteRoutesDefault.set(encodedData, forKey: "RouteDefaults")
-            FavoriteRoutesDefault.synchronize()
-            isFavoriteButtonPressed = false
-        }
-    }*/
 }
-
 
 // Add support for 3D Touch
 extension RouteInfoTableViewController : UIViewControllerPreviewingDelegate
@@ -392,7 +303,7 @@ extension RouteInfoTableViewController : UIViewControllerPreviewingDelegate
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController?
     {
         guard let indexPath = tableView.indexPathForRow(at: location),
-            let cell = tableView.cellForRow(at: indexPath) as? RouteInfoTableViewCell
+            let cell = tableView.cellForRow(at: indexPath) as? StopCell
             else{return nil}
         
         guard let predictionVC = storyboard?.instantiateViewController(withIdentifier: "PredictionTableViewController") as? PredictionTableViewController else {return nil}

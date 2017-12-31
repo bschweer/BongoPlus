@@ -12,13 +12,14 @@
 		280FE0861FEF22D8000795BE /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0851FEF22D8000795BE /* Prediction.swift */; };
 		280FE0881FEF3CF8000795BE /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0871FEF3CF8000795BE /* JSONParser.swift */; };
 		280FE08A1FEF468D000795BE /* BongoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0891FEF468D000795BE /* BongoAPI.swift */; };
-		280FE08C1FEF749B000795BE /* StopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08B1FEF749B000795BE /* StopsTableViewCell.swift */; };
+		280FE08C1FEF749B000795BE /* StopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08B1FEF749B000795BE /* StopCell.swift */; };
 		280FE08E1FEF7967000795BE /* RoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */; };
 		280FE0901FEF7ABB000795BE /* RoutesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */; };
-		280FE0921FEF802F000795BE /* RoutesInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0911FEF802F000795BE /* RoutesInfoTableViewController.swift */; };
+		280FE0921FEF802F000795BE /* RouteInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0911FEF802F000795BE /* RouteInfoTableViewController.swift */; };
 		280FE0941FF01A76000795BE /* BongoLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0931FF01A76000795BE /* BongoLocationManager.swift */; };
 		280FE0961FF0D1AA000795BE /* RouteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0951FF0D1AA000795BE /* RouteInfo.swift */; };
-		280FE0981FF16DA3000795BE /* RouteInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0971FF16DA3000795BE /* RouteInfoTableViewCell.swift */; };
+		281670021FF6EEC500A398E3 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281670011FF6EEC500A398E3 /* UserDefaults.swift */; };
+		281670041FF71DE400A398E3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281670031FF71DE400A398E3 /* MapViewController.swift */; };
 		283A2F601FEF15380027FB75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F5F1FEF15380027FB75 /* AppDelegate.swift */; };
 		283A2F621FEF15380027FB75 /* StopsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F611FEF15380027FB75 /* StopsTableViewController.swift */; };
 		283A2F651FEF15380027FB75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 283A2F631FEF15380027FB75 /* Main.storyboard */; };
@@ -56,13 +57,14 @@
 		280FE0851FEF22D8000795BE /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
 		280FE0871FEF3CF8000795BE /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		280FE0891FEF468D000795BE /* BongoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BongoAPI.swift; sourceTree = "<group>"; };
-		280FE08B1FEF749B000795BE /* StopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopsTableViewCell.swift; sourceTree = "<group>"; };
+		280FE08B1FEF749B000795BE /* StopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopCell.swift; sourceTree = "<group>"; };
 		280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewController.swift; sourceTree = "<group>"; };
 		280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewCell.swift; sourceTree = "<group>"; };
-		280FE0911FEF802F000795BE /* RoutesInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesInfoTableViewController.swift; sourceTree = "<group>"; };
+		280FE0911FEF802F000795BE /* RouteInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfoTableViewController.swift; sourceTree = "<group>"; };
 		280FE0931FF01A76000795BE /* BongoLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BongoLocationManager.swift; sourceTree = "<group>"; };
 		280FE0951FF0D1AA000795BE /* RouteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfo.swift; sourceTree = "<group>"; };
-		280FE0971FF16DA3000795BE /* RouteInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfoTableViewCell.swift; sourceTree = "<group>"; };
+		281670011FF6EEC500A398E3 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		281670031FF71DE400A398E3 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		283A2F5C1FEF15380027FB75 /* Bongo Plus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bongo Plus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		283A2F5F1FEF15380027FB75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		283A2F611FEF15380027FB75 /* StopsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopsTableViewController.swift; sourceTree = "<group>"; };
@@ -133,17 +135,16 @@
 			children = (
 				283A2F5F1FEF15380027FB75 /* AppDelegate.swift */,
 				283A2F611FEF15380027FB75 /* StopsTableViewController.swift */,
-				280FE08B1FEF749B000795BE /* StopsTableViewCell.swift */,
+				280FE08B1FEF749B000795BE /* StopCell.swift */,
 				280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */,
 				280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */,
 				283A2F631FEF15380027FB75 /* Main.storyboard */,
 				287F6C731FF4615A00C4E94C /* TabBarViewController.swift */,
 				2843EB611FF36124001E4655 /* FavoritesTableViewController.swift */,
 				287F6C6F1FF42C3F00C4E94C /* InformationViewController.swift */,
-				280FE0911FEF802F000795BE /* RoutesInfoTableViewController.swift */,
+				280FE0911FEF802F000795BE /* RouteInfoTableViewController.swift */,
 				28C107CD1FF2C962005317EC /* PredictionTableViewController.swift */,
 				28C107CF1FF2D023005317EC /* PredictionTableViewCell.swift */,
-				280FE0971FF16DA3000795BE /* RouteInfoTableViewCell.swift */,
 				280FE0931FF01A76000795BE /* BongoLocationManager.swift */,
 				280FE0811FEF2025000795BE /* Stop.swift */,
 				280FE0871FEF3CF8000795BE /* JSONParser.swift */,
@@ -154,6 +155,8 @@
 				283A2F661FEF15380027FB75 /* Assets.xcassets */,
 				283A2F681FEF15380027FB75 /* LaunchScreen.storyboard */,
 				283A2F6B1FEF15380027FB75 /* Info.plist */,
+				281670011FF6EEC500A398E3 /* UserDefaults.swift */,
+				281670031FF71DE400A398E3 /* MapViewController.swift */,
 			);
 			path = "Bongo Plus";
 			sourceTree = "<group>";
@@ -310,10 +313,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				280FE0921FEF802F000795BE /* RoutesInfoTableViewController.swift in Sources */,
+				280FE0921FEF802F000795BE /* RouteInfoTableViewController.swift in Sources */,
 				280FE08A1FEF468D000795BE /* BongoAPI.swift in Sources */,
 				280FE0941FF01A76000795BE /* BongoLocationManager.swift in Sources */,
-				280FE0981FF16DA3000795BE /* RouteInfoTableViewCell.swift in Sources */,
 				2843EB621FF36124001E4655 /* FavoritesTableViewController.swift in Sources */,
 				283A2F621FEF15380027FB75 /* StopsTableViewController.swift in Sources */,
 				280FE0841FEF2191000795BE /* Route.swift in Sources */,
@@ -323,10 +325,12 @@
 				28C107CE1FF2C962005317EC /* PredictionTableViewController.swift in Sources */,
 				280FE0861FEF22D8000795BE /* Prediction.swift in Sources */,
 				280FE0961FF0D1AA000795BE /* RouteInfo.swift in Sources */,
+				281670041FF71DE400A398E3 /* MapViewController.swift in Sources */,
 				287F6C741FF4615A00C4E94C /* TabBarViewController.swift in Sources */,
 				28C107D01FF2D023005317EC /* PredictionTableViewCell.swift in Sources */,
 				280FE0821FEF2025000795BE /* Stop.swift in Sources */,
-				280FE08C1FEF749B000795BE /* StopsTableViewCell.swift in Sources */,
+				281670021FF6EEC500A398E3 /* UserDefaults.swift in Sources */,
+				280FE08C1FEF749B000795BE /* StopCell.swift in Sources */,
 				280FE0901FEF7ABB000795BE /* RoutesTableViewCell.swift in Sources */,
 				287F6C701FF42C3F00C4E94C /* InformationViewController.swift in Sources */,
 			);

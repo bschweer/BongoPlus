@@ -19,7 +19,6 @@ class PredictionTableViewController: UITableViewController
     private var predictions = [Prediction]()
     private var favoriteStops = [Stop]()
     private var isFavoriteButtonPressed = false
-    private var favoritesNeedUpdate = false
     
     override func viewDidLoad()
     {
@@ -57,20 +56,21 @@ class PredictionTableViewController: UITableViewController
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         
-        headerLabel.text = stop.getStopName()
-        headerLabelSubtitle.text = stop.getStopNumber()
+        headerLabel.text = stop.stopName
+        headerLabelSubtitle.text = stop.stopNumber
         
-        predictions = BongoAPI.getPredictions(stopNumber: stop.getStopNumber())
+        predictions = BongoAPI.getPredictions(stopNumber: stop.stopNumber)
         DispatchQueue.main.async() {
             self.tableView.reloadData()
         }
         
-        if UserDefaults.standard.object(forKey: "FavoriteStops") != nil
+        // Set favorite stops and set state of favorite button
+        if let udData = getFavoriteStopsFromUD()
         {
-            let stopsData =  UserDefaults.standard.object(forKey: "FavoriteStops") as! Data
-            favoriteStops = NSKeyedUnarchiver.unarchiveObject(with: stopsData) as! [Stop]
-            
+            favoriteStops = udData
+
             var stopIsFavorite = false
             for stop in favoriteStops
             {
@@ -89,29 +89,13 @@ class PredictionTableViewController: UITableViewController
             else
             {
                 isFavoriteButtonPressed = false
-                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.gray
             }
         }
     }
     
-    // Save changes to favorites list if necessary
-    override func viewWillDisappear(_ animated: Bool)
-    {
-        super.viewWillDisappear(animated)
-        
-        if favoritesNeedUpdate
-        {
-            let encodedData = NSKeyedArchiver.archivedData(withRootObject: favoriteStops)
-            UserDefaults.standard.set(encodedData, forKey: "FavoriteStops")
-            UserDefaults.standard.synchronize()
-        }
- 
-        favoritesNeedUpdate = false
-    }
-    
     @objc func favoriteButtonPressed()
     {
-        favoritesNeedUpdate = true
         isFavoriteButtonPressed = !isFavoriteButtonPressed
         
         if isFavoriteButtonPressed
@@ -121,7 +105,7 @@ class PredictionTableViewController: UITableViewController
         }
         else
         {
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.gray
             
             // Remove this stop from the favorites array
             for i in 0...favoriteStops.count - 1
@@ -133,6 +117,8 @@ class PredictionTableViewController: UITableViewController
                 }
             }
         }
+        
+        writeFavoriteStopsToUD(favoriteStops: favoriteStops)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int
@@ -179,11 +165,11 @@ class PredictionTableViewController: UITableViewController
         headerview.layer.cornerRadius = 5.0
         headerview.layer.shadowOffset = CGSize(width: 0, height: 0)
         
-        headerLabel.text =  stop.getStopName()
+        headerLabel.text =  stop.stopName
         headerLabel.frame = CGRect(x: 10, y: 5, width: view.frame.width - 16, height: 30)
         headerLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
-        headerLabelSubtitle.text =  "Stop " + stop.getStopNumber()
+        headerLabelSubtitle.text =  "Stop " + stop.stopNumber
         headerLabelSubtitle.frame = CGRect(x: 10, y: 35, width: view.frame.width, height: 30)
         headerLabelSubtitle.font = UIFont.boldSystemFont(ofSize: 18)
         
@@ -195,14 +181,14 @@ class PredictionTableViewController: UITableViewController
     
     @objc func populate()
     {
-        predictions = BongoAPI.getPredictions(stopNumber: stop.getStopNumber())
+        predictions = BongoAPI.getPredictions(stopNumber: stop.stopNumber)
         tableView.reloadData()
         refresher.endRefreshing()
     }
     
     @objc func update()
     {
-        predictions = BongoAPI.getPredictions(stopNumber: stop.getStopNumber())
+        predictions = BongoAPI.getPredictions(stopNumber: stop.stopNumber)
         DispatchQueue.main.async () {
             self.tableView.reloadData()
         }

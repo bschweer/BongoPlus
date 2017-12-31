@@ -11,16 +11,13 @@ import UIKit
 class RoutesTableViewController: UITableViewController
 {
     private var allRoutes = [Route]()
-    ///////////////////let routeglobalData = RouteGlobalData.sharedInstance.routeData
     private let searchController = UISearchController(searchResultsController: nil)
     private var filteredRoutes = [Route]()
-    
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        self.tableView.reloadData()
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Routes"
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -31,8 +28,7 @@ class RoutesTableViewController: UITableViewController
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Routes"
-        searchController.searchBar.barStyle = .blackOpaque
-        searchController.searchBar.barTintColor = .white
+        searchController.searchBar.barStyle = .default
         
         navigationItem.searchController = searchController
         definesPresentationContext = true
@@ -43,6 +39,13 @@ class RoutesTableViewController: UITableViewController
         }
         
         allRoutes = BongoAPI.getAllRoutesFromAPI()
+        tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     func searchBarIsEmpty() -> Bool
@@ -54,7 +57,7 @@ class RoutesTableViewController: UITableViewController
     func filterContentForSearchText(_ searchText: String, scope: String = "All")
     {
         filteredRoutes = allRoutes.filter({( myRoute : Route) -> Bool in
-            return myRoute.getRouteName().lowercased().contains(searchText.lowercased())
+            return myRoute.routeName.lowercased().contains(searchText.lowercased())
         })
         
         tableView.reloadData()
@@ -75,17 +78,10 @@ class RoutesTableViewController: UITableViewController
         return isFiltering() ? filteredRoutes.count : allRoutes.count
     }
     
-    private var selectedRoute: Route? = nil
-    
-    /*override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath)-> IndexPath?
     {
-        selectedRoute = isFiltering() ? filteredRoutes[indexPath.row] : allRoutes[indexPath.row]
-    }*/
-    
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath)->IndexPath?
-    {
-        selectedRoute = isFiltering() ? filteredRoutes[indexPath.row] : allRoutes[indexPath.row]
-        
+        let selectedRoute = isFiltering() ? filteredRoutes[indexPath.row] : allRoutes[indexPath.row]
+                
         guard let routeInfoVC = storyboard?.instantiateViewController(withIdentifier: "RouteInfoTableViewController") as? RouteInfoTableViewController else {return nil}
         routeInfoVC.route = selectedRoute
         
@@ -97,7 +93,7 @@ class RoutesTableViewController: UITableViewController
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)-> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Routecell", for: indexPath)as! RoutesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell", for: indexPath)as! RoutesTableViewCell
         
         if isFiltering()
         {

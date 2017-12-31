@@ -10,20 +10,21 @@ import UIKit
 
 class FavoritesTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
+    @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
     private var favoriteStops = [Stop]()
     private var favoriteRoutes = [Route]()
     
-    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Favorites"
         
-        segmentedControl.setWidth(self.view.frame.width / 4, forSegmentAt: 0)
-        segmentedControl.setWidth(self.view.frame.width / 4, forSegmentAt: 1)
+        segmentedControl.setWidth(self.view.frame.width / 3, forSegmentAt: 0)
+        segmentedControl.setWidth(self.view.frame.width / 3, forSegmentAt: 1)
 
         // Add gestures for swipe right and swipe left
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
@@ -50,24 +51,58 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        if UserDefaults.standard.object(forKey: "FavoriteRoutes") != nil
+        // Get favorite stops and routes from users defaults
+        if let udData = getFavoriteStopsFromUD()
         {
-            let routeData =  UserDefaults.standard.object(forKey: "FavoriteRoutes") as! Data
-            favoriteRoutes = NSKeyedUnarchiver.unarchiveObject(with: routeData) as! [Route]
+            favoriteStops = udData
         }
-        
-        if UserDefaults.standard.object(forKey: "FavoriteStops") != nil
+        if let udData = getFavoriteRoutesFromUD()
         {
-            let stopsData =  UserDefaults.standard.object(forKey: "FavoriteStops") as! Data
-            favoriteStops = NSKeyedUnarchiver.unarchiveObject(with: stopsData) as! [Stop]
+            favoriteRoutes = udData
         }
         
         tableView.reloadData()
     }
     
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        resetEditButton()
+        tableView.isEditing = false
+    }
+    
+    
+    @IBAction func editButtonPressed(_ sender: UIBarButtonItem)
+    {
+        tableView.isEditing = !tableView.isEditing
+        
+        if tableView.isEditing
+        {
+            sender.title = "Done"
+            sender.style = .done
+        }
+        else
+        {
+            resetEditButton()
+        }
+    }
+    
+    private func resetEditButton()
+    {
+        editButton.title = "Edit"
+        editButton.style = .plain
+    }
+    
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer)
     {
+        // Ignore gesture if the user is editing their favorites
+        if tableView.isEditing
+        {
+            return
+        }
+        
         if let swipeGesture = gesture as? UISwipeGestureRecognizer
         {
             if swipeGesture.direction == .right
@@ -85,36 +120,10 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBAction func segmentedControlValueChanged()
     {
+        tableView.isEditing = false
+        resetEditButton()
         tableView.reloadData()
     }
-    
-
-    
-    
- /*   func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?
-    {
-        /*let stop = stops[indexPath.row]
-         
-         routePredictionGlobalData.stoptitle = stop.stoptitle!
-         routePredictionGlobalData.stopnumber = stop.stopnumber!
-         routePredictionGlobalData.stoplat = stop.stoplat!
-         routePredictionGlobalData.stoplng = stop.stoplng!
-         
-         */
-        let selectedStop = selectedRouteInfo?.getStops()[indexPath.row]
-        
-        guard let predictionVC = storyboard?.instantiateViewController(withIdentifier: "PredictionTableViewController") as? PredictionTableViewController else {return nil}
-        
-        predictionVC.stop = selectedStop
-        
-        DispatchQueue.main.async {
-            self.navigationController?.pushViewController(predictionVC, animated: true)
-        }
-        
-        return indexPath
-    }*/
-    
-    
 
     func numberOfSections(in tableView: UITableView)->Int
     {
@@ -130,13 +139,13 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
     {
         if segmentedControl.selectedSegmentIndex == 0
         {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Stopscell", for: indexPath) as! StopsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StopCell", for: indexPath) as! StopCell
             cell.stop = favoriteStops[indexPath.row]
             return cell
         }
         else
         {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Routecell", for: indexPath) as! RoutesTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell", for: indexPath) as! RoutesTableViewCell
             cell.route = favoriteRoutes[indexPath.row]
             return cell
         }
@@ -165,6 +174,58 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
         
         return indexPath
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle
+    {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool
+    {
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool
+    {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
+    {
+        if segmentedControl.selectedSegmentIndex == 0
+        {
+            let movedStop = favoriteStops[sourceIndexPath.row]
+            favoriteStops.remove(at: sourceIndexPath.row)
+            favoriteStops.insert(movedStop, at: destinationIndexPath.row)
+            writeFavoriteStopsToUD(favoriteStops: favoriteStops)
+        }
+        else
+        {
+            let movedRoute = favoriteRoutes[sourceIndexPath.row]
+            favoriteRoutes.remove(at: sourceIndexPath.row)
+            favoriteRoutes.insert(movedRoute, at: destinationIndexPath.row)
+            writeFavoriteRoutesToUD(favoriteRoutes: favoriteRoutes)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
+    {
+        if editingStyle == .delete
+        {
+            if segmentedControl.selectedSegmentIndex == 0
+            {
+                favoriteStops.remove(at: indexPath.row)
+                writeFavoriteStopsToUD(favoriteStops: favoriteStops)
+            }
+            else
+            {
+                favoriteRoutes.remove(at: indexPath.row)
+                writeFavoriteRoutesToUD(favoriteRoutes: favoriteRoutes)
+            }
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
 }
 
 // Add support for 3D Touch
@@ -176,7 +237,7 @@ extension FavoritesTableViewController : UIViewControllerPreviewingDelegate
         if segmentedControl.selectedSegmentIndex == 0
         {
             guard let indexPath = tableView.indexPathForRow(at: location),
-                let cell = tableView.cellForRow(at: indexPath) as? StopsTableViewCell
+                let cell = tableView.cellForRow(at: indexPath) as? StopCell
                 else{return nil}
             
             guard let predictionVC = storyboard?.instantiateViewController(withIdentifier: "PredictionTableViewController") as? PredictionTableViewController else {return nil}

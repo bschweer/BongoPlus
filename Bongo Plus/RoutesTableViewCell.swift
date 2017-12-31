@@ -27,16 +27,16 @@ class RoutesTableViewCell: UITableViewCell
         CardView.layer.cornerRadius = 5.0
         CardView.layer.shadowOffset = CGSize(width: 0, height: 0)
         
-        titleLabel.text = route.getRouteName()
+        titleLabel.text = route.routeName
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.1
                 
-        if (route.getAgencyName() == "Cambus")
+        if (route.agencyName == "Cambus")
         {
             ImageView.image = UIImage(named: "Cambus")
         }
-        else if route.getAgencyName() == "Coralville Transit"
+        else if route.agencyName == "Coralville Transit"
         {
             ImageView.image = UIImage(named: "Coralville")
         }
