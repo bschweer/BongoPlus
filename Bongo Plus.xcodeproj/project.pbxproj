@@ -29,6 +29,7 @@
 		283A2F801FEF15390027FB75 /* Bongo_PlusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A2F7F1FEF15390027FB75 /* Bongo_PlusUITests.swift */; };
 		2843EB621FF36124001E4655 /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2843EB611FF36124001E4655 /* FavoritesTableViewController.swift */; };
 		287F571A1FF8980C0008183C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287F57191FF8980C0008183C /* MapKit.framework */; };
+		287F571C1FF89A4C0008183C /* TripPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287F571B1FF89A4C0008183C /* TripPlanViewController.swift */; };
 		287F6C701FF42C3F00C4E94C /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287F6C6F1FF42C3F00C4E94C /* InformationViewController.swift */; };
 		287F6C741FF4615A00C4E94C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287F6C731FF4615A00C4E94C /* TabBarViewController.swift */; };
 		28C107CE1FF2C962005317EC /* PredictionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C107CD1FF2C962005317EC /* PredictionTableViewController.swift */; };
@@ -81,6 +82,7 @@
 		283A2F811FEF15390027FB75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2843EB611FF36124001E4655 /* FavoritesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewController.swift; sourceTree = "<group>"; };
 		287F57191FF8980C0008183C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		287F571B1FF89A4C0008183C /* TripPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripPlanViewController.swift; sourceTree = "<group>"; };
 		287F6C6F1FF42C3F00C4E94C /* InformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
 		287F6C731FF4615A00C4E94C /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		28C107CD1FF2C962005317EC /* PredictionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionTableViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				287F6C6F1FF42C3F00C4E94C /* InformationViewController.swift */,
 				280FE0911FEF802F000795BE /* RouteInfoTableViewController.swift */,
 				28C107CD1FF2C962005317EC /* PredictionTableViewController.swift */,
+				287F571B1FF89A4C0008183C /* TripPlanViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				280FE0861FEF22D8000795BE /* Prediction.swift in Sources */,
 				280FE0961FF0D1AA000795BE /* RouteInfo.swift in Sources */,
 				281670041FF71DE400A398E3 /* MapViewController.swift in Sources */,
+				287F571C1FF89A4C0008183C /* TripPlanViewController.swift in Sources */,
 				287F6C741FF4615A00C4E94C /* TabBarViewController.swift in Sources */,
 				28C107D01FF2D023005317EC /* PredictionTableViewCell.swift in Sources */,
 				280FE0821FEF2025000795BE /* Stop.swift in Sources */,
