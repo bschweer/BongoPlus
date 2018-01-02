@@ -19,7 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         
-        UIApplication.shared.statusBarStyle = .lightContent*/        
+        UIApplication.shared.statusBarStyle = .lightContent*/
+        
+        // On app startup, make API calls for stops and routes
+        
+        DispatchQueue.main.async {
+            BongoAPI.getAllStopsFromAPI(completion: {_ in return })
+            BongoAPI.getAllRoutesFromAPI(completion: {_ in return})
+        }
+        
         
         return true
     }

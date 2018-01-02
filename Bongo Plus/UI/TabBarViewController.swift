@@ -14,43 +14,17 @@ class TabBarViewController: UITabBarController
     {
         super.viewDidLoad()
         
-        self.tabBar.barTintColor =  UIColor(red: 37.0/255.0, green: 39.0/255.0, blue: 42.0/255.0, alpha: 1.0)
+        /*self.tabBar.barTintColor =  UIColor(red: 37.0/255.0, green: 39.0/255.0, blue: 42.0/255.0, alpha: 1.0)
         self.tabBar.tintColor = UIColor.white
         self.tabBar.isTranslucent = false
+        tabBar.reloadInputViews()*/
         
-        tabBar.reloadInputViews()
-    }
-    
-    override func viewWillLayoutSubviews()
-    {
-        super.viewWillLayoutSubviews()
-        var tabFrame = self.tabBar.frame
+        /*tabBar.layer.borderWidth = 0.25
+        tabBar.layer.borderColor = UIColor.lightGray.cgColor
+        tabBar.clipsToBounds = true*/
+        //tabBar.layer.shadowOffset = CGSize(width: 0, height: 0.5)
+        //tabBar.layer.shadowColor = UIColor.lightGray.cgColor
         
-        // Adjust size of tab bar based on device type
-        let height: CGFloat
-        if UIDevice().userInterfaceIdiom == .phone
-        {
-            switch UIScreen.main.nativeBounds.height
-            {
-            case 1136: // 5S/SE
-                height = 40
-            case 1334: // 6/S/7/8
-                height = 55
-            case 2208: // 6+/S+/7+/8+
-                height = 60
-            case 2436: // X
-                height = 90
-            default: // Unknown
-                height = 50
-            }
-        }
-        else
-        {
-            height = 80
-        }
-        
-        tabFrame.size.height = height
-        tabFrame.origin.y = self.view.frame.size.height - height
-        self.tabBar.frame = tabFrame
+        //tabBar.backgroundColor = UIColor.lightGray
     }
 }

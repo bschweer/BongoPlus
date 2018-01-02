@@ -30,8 +30,9 @@ public class Prediction
         self.routeName = dictionary["title"] as! String
         self.prediction = dictionary["minutes"] as! Int
         self.direction = dictionary["direction"] as! String
-        self.agency = dictionary["agency"] as! String
-        self.agencyName = dictionary["agencyName"] as! String
+        self.agency = (dictionary["agency"] as? String) ?? "No agency"
+        self.agencyName = (dictionary["agencyName"] as? String) ?? "No agencyName"
+        //Zexian Huang: A nasty way to handle the api nil error, consider changing it later.
     }
     
     public func getRouteName()->String

@@ -408,7 +408,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZRR-Kd-1cz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1511" y="-177"/>
+            <point key="canvasLocation" x="1512" y="-247"/>
         </scene>
         <!--Prediction Table View Controller-->
         <scene sceneID="7NZ-hj-ezS">
@@ -651,7 +651,7 @@
         <!--Information View Controller-->
         <scene sceneID="uz8-zp-sIG">
             <objects>
-                <viewController storyboardIdentifier="InformationViewController" id="AFM-eo-B3l" customClass="InformationViewController" customModule="Bongo_Plus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InformationViewController" modalPresentationStyle="overFullScreen" id="AFM-eo-B3l" customClass="InformationViewController" customModule="Bongo_Plus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bUs-Ov-nvm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

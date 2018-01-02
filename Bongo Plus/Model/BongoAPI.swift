@@ -20,7 +20,7 @@ public class BongoAPI
     private static var allRoutes = [Route]()
     private static var allStops = [Stop]()
     
-    public static func getAllRoutesFromAPI()->[Route]
+   /* public static func getAllRoutesFromAPI()->[Route]
     {
         if allRoutes.count == 0
         {
@@ -32,9 +32,31 @@ public class BongoAPI
         }
         
         return allRoutes
+    }*/
+    
+    public static func getAllRoutes()->[Route]
+    {
+        return allRoutes
     }
     
-    public static func getAllStopsFromAPI()->[Stop]
+    public static func getAllRoutesFromAPI(completion:  @escaping (_ routes: [Route]) -> Void)
+    {
+        if allRoutes.count == 0
+        {
+            makeRequest(url: allRoutesURL, completion: {
+                dictionary in
+                
+                allRoutes = JSONParser.getAllRoutes(jsonDictionary: dictionary)
+                completion(allRoutes)
+            })
+        }
+        else
+        {
+            completion(allRoutes)
+        }
+    }
+    
+    /*public static func getAllStopsFromAPI()->[Stop]
     {
         if allStops.count == 0
         {
@@ -45,6 +67,11 @@ public class BongoAPI
             }
         }
         
+        return allStops
+    }*/
+    
+    public static func getAllStops()->[Stop]
+    {
         return allStops
     }
     
@@ -66,7 +93,7 @@ public class BongoAPI
     }
     
     
-    public static func getRouteInfo(agency: String, routeID: Int)->RouteInfo
+    /*public static func getRouteInfo(agency: String, routeID: Int)->RouteInfo
     {
         var dictionary = [String : AnyObject]()
         
@@ -74,7 +101,7 @@ public class BongoAPI
         dictionary = makeRequest(url: url)
         
         return JSONParser.getRouteInfo(jsonDictionary: dictionary)
-    }
+    }*/
     
     
     public static func getRouteInfo(agency: String, routeID: Int, completion:  @escaping (_ routeInfo: RouteInfo) -> ())
@@ -88,14 +115,23 @@ public class BongoAPI
     
     
     
-    public static func getPredictions(stopNumber: String)->[Prediction]
+    /*public static func getPredictions(stopNumber: String)->[Prediction]
     {
-        let url = prefix + "prediction?stopid=" + stopNumber + "&" + apiKey
         let dictionary = makeRequest(url: url)
         return JSONParser.getPredictions(jsonDictionary: dictionary)
+    }*/
+    
+    public static func getPredictions(stopNumber: String, completion:  @escaping (_ predictions: [Prediction]) -> ())
+    {
+        let url = prefix + "prediction?stopid=" + stopNumber + "&" + apiKey
+        makeRequest(url: url, completion: {
+            dictionary in
+            completion(JSONParser.getPredictions(jsonDictionary: dictionary))
+        })
     }
     
-    private static func makeRequest(url: String)->[String:AnyObject]
+    
+    /*private static func makeRequest(url: String)->[String:AnyObject]
     {
         var dictionary = [String:AnyObject]()
         
@@ -125,7 +161,7 @@ public class BongoAPI
         }
         
         return dictionary
-    }
+    }*/
     
     
     

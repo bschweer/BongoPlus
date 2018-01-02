@@ -27,6 +27,8 @@ class PredictionTableViewController: UITableViewController
         
         headerLabel.adjustsFontSizeToFitWidth = true
         headerLabelSubtitle.adjustsFontSizeToFitWidth = true
+        headerLabel.text = stop.stopName
+        headerLabelSubtitle.text = "Stop " + stop.stopNumber
         
         // Configure the cells for the table
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -46,11 +48,7 @@ class PredictionTableViewController: UITableViewController
         self.navigationItem.rightBarButtonItem = favoriteButton
         
         // Self-update 15 second intervals
-        Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(PredictionTableViewController.update), userInfo: nil, repeats: true)
-        
-        DispatchQueue.main.async {
-            self.populate()
-        }
+        Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(PredictionTableViewController.populate), userInfo: nil, repeats: true)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -58,13 +56,15 @@ class PredictionTableViewController: UITableViewController
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.prefersLargeTitles = false
         
-        headerLabel.text = stop.stopName
-        headerLabelSubtitle.text = stop.stopNumber
-        
-        predictions = BongoAPI.getPredictions(stopNumber: stop.stopNumber)
-        DispatchQueue.main.async() {
-            self.tableView.reloadData()
-        }
+        BongoAPI.getPredictions(stopNumber: self.stop.stopNumber, completion: {
+            predictions in
+            
+            self.predictions = predictions
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        })
         
         // Set favorite stops and set state of favorite button
         if let udData = getFavoriteStopsFromUD()
@@ -157,7 +157,7 @@ class PredictionTableViewController: UITableViewController
         return cell
     }
     
-    override func tableView(_ tableView: UITableView,viewForHeaderInSection section: Int)->UIView?
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int)-> UIView?
     {
         headerview.backgroundColor = UIColor.clear
         headerview.layer.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0.95, 0.95, 0.95, 0.95])
@@ -165,11 +165,9 @@ class PredictionTableViewController: UITableViewController
         headerview.layer.cornerRadius = 5.0
         headerview.layer.shadowOffset = CGSize(width: 0, height: 0)
         
-        headerLabel.text =  stop.stopName
         headerLabel.frame = CGRect(x: 10, y: 5, width: view.frame.width - 16, height: 30)
         headerLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
-        headerLabelSubtitle.text =  "Stop " + stop.stopNumber
         headerLabelSubtitle.frame = CGRect(x: 10, y: 35, width: view.frame.width, height: 30)
         headerLabelSubtitle.font = UIFont.boldSystemFont(ofSize: 18)
         
@@ -181,17 +179,13 @@ class PredictionTableViewController: UITableViewController
     
     @objc func populate()
     {
-        predictions = BongoAPI.getPredictions(stopNumber: stop.stopNumber)
-        tableView.reloadData()
-        refresher.endRefreshing()
-    }
-    
-    @objc func update()
-    {
-        predictions = BongoAPI.getPredictions(stopNumber: stop.stopNumber)
-        DispatchQueue.main.async () {
-            self.tableView.reloadData()
-        }
-        refresher.endRefreshing()
+        BongoAPI.getPredictions(stopNumber: self.stop.stopNumber, completion: {
+            predictions in
+            self.predictions = predictions
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.refresher.endRefreshing()
+            }
+        })
     }
 }

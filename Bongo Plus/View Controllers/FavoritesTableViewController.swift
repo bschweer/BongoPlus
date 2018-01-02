@@ -14,6 +14,7 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
+    private var emptyLabel: UILabel!
     private var favoriteStops = [Stop]()
     private var favoriteRoutes = [Route]()
     
@@ -35,17 +36,23 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
         swipeLeft.direction = UISwipeGestureRecognizerDirection.left
         self.view.addGestureRecognizer(swipeLeft)
         
-        if traitCollection.forceTouchCapability == .available
-        {
-            registerForPreviewing(with: self, sourceView: tableView)
-        }
+        // Configure label for telling user that no favorites exist
+        emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 20))
+        emptyLabel.text = "No Favorites to Display"
+        emptyLabel.textAlignment = .center
+        emptyLabel.textColor = UIColor.lightGray
+        emptyLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        emptyLabel.adjustsFontSizeToFitWidth = true
         
         if traitCollection.forceTouchCapability == .available
         {
             registerForPreviewing(with: self, sourceView: tableView)
         }
         
-        tableView.reloadData()
+        if traitCollection.forceTouchCapability == .available
+        {
+            registerForPreviewing(with: self, sourceView: tableView)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -64,6 +71,7 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         tableView.reloadData()
+        checkForEmptyTable()
     }
     
     override func viewWillDisappear(_ animated: Bool)
@@ -123,8 +131,22 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
         tableView.isEditing = false
         resetEditButton()
         tableView.reloadData()
+        checkForEmptyTable()
     }
 
+    private func checkForEmptyTable()
+    {
+        if segmentedControl.selectedSegmentIndex == 0 && favoriteStops.isEmpty || segmentedControl.selectedSegmentIndex == 1 && favoriteRoutes.isEmpty
+        {
+            tableView.backgroundView = emptyLabel
+        }
+        else
+        {
+            tableView.backgroundView = nil
+        }
+    }
+    
+    
     func numberOfSections(in tableView: UITableView)->Int
     {
         return 1
@@ -159,6 +181,7 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
             predictionVC.stop = favoriteStops[indexPath.row]
             
             DispatchQueue.main.async {
+                
                 self.navigationController?.pushViewController(predictionVC, animated: true)
             }
         }
@@ -168,6 +191,7 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
             routeInfoVC.route = favoriteRoutes[indexPath.row]
             
             DispatchQueue.main.async {
+                
                 self.navigationController?.pushViewController(routeInfoVC, animated: true)
             }
         }
@@ -206,6 +230,8 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
             favoriteRoutes.insert(movedRoute, at: destinationIndexPath.row)
             writeFavoriteRoutesToUD(favoriteRoutes: favoriteRoutes)
         }
+        
+        checkForEmptyTable()
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
@@ -224,6 +250,7 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
             }
             
             tableView.deleteRows(at: [indexPath], with: .fade)
+            checkForEmptyTable()
         }
     }
 }

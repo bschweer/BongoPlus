@@ -37,6 +37,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     private func configureButton(button: UIButton)
     {
         button.layer.cornerRadius = 15
@@ -59,7 +70,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     private func getStopsWithin(distance searchRadius: Double, from sourceLocation: CLLocation) -> [Stop]
     {
-        let allStops = BongoAPI.getAllStopsFromAPI()
+        let allStops = BongoAPI.getAllStops()
         var closeStops = [Stop]()
         
         for stop in allStops
@@ -75,10 +86,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         return closeStops
     }
-    
-    
-    
-    
 
     
     @IBAction func nearbyStopsButtonPressed()

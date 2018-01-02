@@ -24,6 +24,14 @@ class RoutesTableViewController: UITableViewController
         self.tableView.separatorColor = UIColor.clear
         self.tableView.tableFooterView = UIView()
         
+        BongoAPI.getAllRoutesFromAPI(completion: {
+            routes in
+            self.allRoutes = routes
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        })
+        
         // Set up the Search Controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -37,9 +45,6 @@ class RoutesTableViewController: UITableViewController
         {
             registerForPreviewing(with: self, sourceView: tableView)
         }
-        
-        allRoutes = BongoAPI.getAllRoutesFromAPI()
-        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool)

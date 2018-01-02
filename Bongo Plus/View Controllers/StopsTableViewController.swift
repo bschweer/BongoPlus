@@ -18,6 +18,7 @@ class StopsTableViewController: UITableViewController
     {
         super.viewDidLoad()
         self.navigationItem.title = "Stops"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         
         BongoAPI.getAllStopsFromAPI(completion: {
             stops in

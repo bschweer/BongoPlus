@@ -42,7 +42,15 @@ class RouteInfoTableViewController: UIViewController, UITableViewDelegate, UITab
         bongoLocationManager.requestAuthorization()
         BongoLocationManager.centerMapOnLocation(map: theMap, location: bongoLocationManager.getLocation(), animated: false)
 
-
+        BongoAPI.getRouteInfo(agency: (self.route?.agency)!, routeID: (self.route?.routeID)!, completion: {
+            routeInfo in
+            self.selectedRouteInfo = routeInfo
+            self.showRoute()
+            DispatchQueue.main.async {
+                self.showAllStops()
+                self.tableView.reloadData()
+            }
+        })
 /*        else if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
         {
             locationManager.startUpdatingLocation()
@@ -72,15 +80,6 @@ class RouteInfoTableViewController: UIViewController, UITableViewDelegate, UITab
         if traitCollection.forceTouchCapability == .available
         {
             registerForPreviewing(with: self, sourceView: tableView)
-        }
-        
-        self.selectedRouteInfo = BongoAPI.getRouteInfo(agency: (self.route?.agency)!, routeID: (self.route?.routeID)!)
-        
-        // Show route path and stops on the map
-        DispatchQueue.main.async {
-            self.showRoute()
-            self.showAllStops()
-            self.tableView.reloadData()
         }
     }
     
@@ -269,7 +268,7 @@ class RouteInfoTableViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return selectedRouteInfo?.getStops().count ?? 1
+        return selectedRouteInfo?.getStops().count ?? 0
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?
