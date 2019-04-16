@@ -137,6 +137,8 @@
 		283A2F5E1FEF15380027FB75 /* Bongo Plus */ = {
 			isa = PBXGroup;
 			children = (
+				287AB49E226599B500C01CC4 /* Constants */,
+				287AB49D2265998400C01CC4 /* Helpers */,
 				287AB49B2265914500C01CC4 /* Services */,
 				287F57131FF88B160008183C /* View Controllers */,
 				287F57151FF88C5C0008183C /* View */,
@@ -185,6 +187,22 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		287AB49D2265998400C01CC4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				280FE0931FF01A76000795BE /* BongoLocationManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		287AB49E226599B500C01CC4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				281670011FF6EEC500A398E3 /* UserDefaults.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		287F57131FF88B160008183C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,12 +221,10 @@
 		287F57141FF88C1C0008183C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				280FE0931FF01A76000795BE /* BongoLocationManager.swift */,
 				280FE0851FEF22D8000795BE /* Prediction.swift */,
 				280FE0831FEF2191000795BE /* Route.swift */,
 				280FE0951FF0D1AA000795BE /* RouteInfo.swift */,
 				280FE0811FEF2025000795BE /* Stop.swift */,
-				281670011FF6EEC500A398E3 /* UserDefaults.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
