@@ -20,7 +20,7 @@ class StopsTableViewController: UITableViewController
         self.navigationItem.title = "Stops"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        BongoAPI.getAllStopsFromAPI(completion: {
+        BongoServiceAPI.getAllStopsFromAPI(completion: {
             stops in
             self.allStops = stops
             DispatchQueue.main.async {

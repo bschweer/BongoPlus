@@ -24,7 +24,7 @@ class RoutesTableViewController: UITableViewController
         self.tableView.separatorColor = UIColor.clear
         self.tableView.tableFooterView = UIView()
         
-        BongoAPI.getAllRoutesFromAPI(completion: {
+        BongoServiceAPI.getAllRoutesFromAPI(completion: {
             routes in
             self.allRoutes = routes
             DispatchQueue.main.async {

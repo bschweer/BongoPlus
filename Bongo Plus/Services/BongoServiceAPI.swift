@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class BongoAPI
+public class BongoServiceAPI
 {
     private static let baseUrl = "https://api.ebongo.org/"
     private static let apiKey = "api_key=XXXX"

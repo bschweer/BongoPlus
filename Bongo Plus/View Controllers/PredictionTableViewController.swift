@@ -56,7 +56,7 @@ class PredictionTableViewController: UITableViewController
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.prefersLargeTitles = false
         
-        BongoAPI.getPredictions(stopNumber: self.stop.stopNumber, completion: {
+        BongoServiceAPI.getPredictions(stopNumber: self.stop.stopNumber, completion: {
             predictions in
             
             self.predictions = predictions
@@ -179,7 +179,7 @@ class PredictionTableViewController: UITableViewController
     
     @objc func populate()
     {
-        BongoAPI.getPredictions(stopNumber: self.stop.stopNumber, completion: {
+        BongoServiceAPI.getPredictions(stopNumber: self.stop.stopNumber, completion: {
             predictions in
             self.predictions = predictions
             DispatchQueue.main.async {

@@ -24,8 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // On app startup, make API calls for stops and routes
         
         DispatchQueue.main.async {
-            BongoAPI.getAllStopsFromAPI(completion: {_ in return })
-            BongoAPI.getAllRoutesFromAPI(completion: {_ in return})
+            BongoServiceAPI.getAllStopsFromAPI(completion: {_ in return })
+            BongoServiceAPI.getAllRoutesFromAPI(completion: {_ in return})
         }
         
         

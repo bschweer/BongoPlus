@@ -42,7 +42,7 @@ class RouteInfoTableViewController: UIViewController, UITableViewDelegate, UITab
         bongoLocationManager.requestAuthorization()
         BongoLocationManager.centerMapOnLocation(map: theMap, location: bongoLocationManager.getLocation(), animated: false)
 
-        BongoAPI.getRouteInfo(agency: (self.route?.agency)!, routeID: (self.route?.routeID)!, completion: {
+        BongoServiceAPI.getRouteInfo(agency: (self.route?.agency)!, routeID: (self.route?.routeID)!, completion: {
             routeInfo in
             self.selectedRouteInfo = routeInfo
             self.showRoute()

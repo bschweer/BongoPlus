@@ -11,7 +11,7 @@
 		280FE0841FEF2191000795BE /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0831FEF2191000795BE /* Route.swift */; };
 		280FE0861FEF22D8000795BE /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0851FEF22D8000795BE /* Prediction.swift */; };
 		280FE0881FEF3CF8000795BE /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0871FEF3CF8000795BE /* JSONParser.swift */; };
-		280FE08A1FEF468D000795BE /* BongoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0891FEF468D000795BE /* BongoAPI.swift */; };
+		280FE08A1FEF468D000795BE /* BongoServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE0891FEF468D000795BE /* BongoServiceAPI.swift */; };
 		280FE08C1FEF749B000795BE /* StopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08B1FEF749B000795BE /* StopCell.swift */; };
 		280FE08E1FEF7967000795BE /* RoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */; };
 		280FE0901FEF7ABB000795BE /* RoutesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */; };
@@ -58,7 +58,7 @@
 		280FE0831FEF2191000795BE /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		280FE0851FEF22D8000795BE /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
 		280FE0871FEF3CF8000795BE /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
-		280FE0891FEF468D000795BE /* BongoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BongoAPI.swift; sourceTree = "<group>"; };
+		280FE0891FEF468D000795BE /* BongoServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BongoServiceAPI.swift; sourceTree = "<group>"; };
 		280FE08B1FEF749B000795BE /* StopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopCell.swift; sourceTree = "<group>"; };
 		280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewController.swift; sourceTree = "<group>"; };
 		280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTableViewCell.swift; sourceTree = "<group>"; };
@@ -139,13 +139,12 @@
 		283A2F5E1FEF15380027FB75 /* Bongo Plus */ = {
 			isa = PBXGroup;
 			children = (
+				287AB49B2265914500C01CC4 /* Services */,
 				287F57131FF88B160008183C /* View Controllers */,
-				287F57151FF88C5C0008183C /* UI */,
+				287F57151FF88C5C0008183C /* View */,
 				287F57141FF88C1C0008183C /* Model */,
 				283A2F5F1FEF15380027FB75 /* AppDelegate.swift */,
 				283A2F661FEF15380027FB75 /* Assets.xcassets */,
-				283A2F631FEF15380027FB75 /* Main.storyboard */,
-				283A2F681FEF15380027FB75 /* LaunchScreen.storyboard */,
 				283A2F6B1FEF15380027FB75 /* Info.plist */,
 			);
 			path = "Bongo Plus";
@@ -169,9 +168,29 @@
 			path = "Bongo PlusUITests";
 			sourceTree = "<group>";
 		};
+		287AB49B2265914500C01CC4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				280FE0871FEF3CF8000795BE /* JSONParser.swift */,
+				280FE0891FEF468D000795BE /* BongoServiceAPI.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		287AB49C2265943C00C01CC4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				28C107CF1FF2D023005317EC /* PredictionTableViewCell.swift */,
+				280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */,
+				280FE08B1FEF749B000795BE /* StopCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		287F57131FF88B160008183C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				287F6C731FF4615A00C4E94C /* TabBarViewController.swift */,
 				2843EB611FF36124001E4655 /* FavoritesTableViewController.swift */,
 				280FE08D1FEF7967000795BE /* RoutesTableViewController.swift */,
 				283A2F611FEF15380027FB75 /* StopsTableViewController.swift */,
@@ -188,8 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				280FE0931FF01A76000795BE /* BongoLocationManager.swift */,
-				280FE0891FEF468D000795BE /* BongoAPI.swift */,
-				280FE0871FEF3CF8000795BE /* JSONParser.swift */,
 				280FE0851FEF22D8000795BE /* Prediction.swift */,
 				280FE0831FEF2191000795BE /* Route.swift */,
 				280FE0951FF0D1AA000795BE /* RouteInfo.swift */,
@@ -199,15 +216,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		287F57151FF88C5C0008183C /* UI */ = {
+		287F57151FF88C5C0008183C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				280FE08B1FEF749B000795BE /* StopCell.swift */,
-				280FE08F1FEF7ABB000795BE /* RoutesTableViewCell.swift */,
-				287F6C731FF4615A00C4E94C /* TabBarViewController.swift */,
-				28C107CF1FF2D023005317EC /* PredictionTableViewCell.swift */,
+				283A2F631FEF15380027FB75 /* Main.storyboard */,
+				283A2F681FEF15380027FB75 /* LaunchScreen.storyboard */,
+				287AB49C2265943C00C01CC4 /* Cells */,
 			);
-			path = UI;
+			path = View;
 			sourceTree = "<group>";
 		};
 		287F57161FF897F20008183C /* Frameworks */ = {
@@ -361,7 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				280FE0921FEF802F000795BE /* RouteInfoTableViewController.swift in Sources */,
-				280FE08A1FEF468D000795BE /* BongoAPI.swift in Sources */,
+				280FE08A1FEF468D000795BE /* BongoServiceAPI.swift in Sources */,
 				280FE0941FF01A76000795BE /* BongoLocationManager.swift in Sources */,
 				2843EB621FF36124001E4655 /* FavoritesTableViewController.swift in Sources */,
 				283A2F621FEF15380027FB75 /* StopsTableViewController.swift in Sources */,

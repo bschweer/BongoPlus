@@ -70,7 +70,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     private func getStopsWithin(distance searchRadius: Double, from sourceLocation: CLLocation) -> [Stop]
     {
-        let allStops = BongoAPI.getAllStops()
+        let allStops = BongoServiceAPI.getAllStops()
         var closeStops = [Stop]()
         
         for stop in allStops
