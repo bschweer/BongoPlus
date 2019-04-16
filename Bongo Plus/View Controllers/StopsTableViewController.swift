@@ -37,7 +37,7 @@ class StopsTableViewController: UITableViewController
         self.navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.separatorColor = UIColor.clear
         self.tableView.tableFooterView = UIView()
         

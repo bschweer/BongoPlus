@@ -133,7 +133,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView?.canShowCallout = true
             
-            let infoButton = UIButton(type: UIButtonType.detailDisclosure)
+            let infoButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
             pinView!.rightCalloutAccessoryView = infoButton as UIView
         }
         else

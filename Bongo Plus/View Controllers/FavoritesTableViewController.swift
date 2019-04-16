@@ -29,11 +29,11 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
 
         // Add gestures for swipe right and swipe left
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         self.view.addGestureRecognizer(swipeLeft)
         
         // Configure label for telling user that no favorites exist
@@ -199,7 +199,7 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
         return indexPath
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle
     {
         return .delete
     }
@@ -234,7 +234,7 @@ class FavoritesTableViewController: UIViewController, UITableViewDataSource, UIT
         checkForEmptyTable()
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath)
     {
         if editingStyle == .delete
         {

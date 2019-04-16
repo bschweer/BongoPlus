@@ -31,7 +31,7 @@ class PredictionTableViewController: UITableViewController
         headerLabelSubtitle.text = "Stop " + stop.stopNumber
         
         // Configure the cells for the table
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.separatorColor = UIColor.clear
         self.tableView.tableFooterView = UIView()
         self.tableView.sectionHeaderHeight = 70
@@ -39,7 +39,7 @@ class PredictionTableViewController: UITableViewController
         // Add support for pull to refresh
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to Refresh")
-        refresher.addTarget(self, action: #selector(PredictionTableViewController.populate), for: UIControlEvents.valueChanged)
+        refresher.addTarget(self, action: #selector(PredictionTableViewController.populate), for: UIControl.Event.valueChanged)
         
         tableView.addSubview(refresher)
 
@@ -152,7 +152,7 @@ class PredictionTableViewController: UITableViewController
         }
         
         cell.contentView.addSubview(whiteRoundedView)
-        cell.contentView.sendSubview(toBack: whiteRoundedView)
+        cell.contentView.sendSubviewToBack(whiteRoundedView)
         
         return cell
     }

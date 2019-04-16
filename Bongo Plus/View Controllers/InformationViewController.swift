@@ -17,7 +17,7 @@ class InformationViewController: UIViewController
         super.viewDidLoad()
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeDown.direction = UISwipeGestureRecognizerDirection.down
+        swipeDown.direction = UISwipeGestureRecognizer.Direction.down
         self.view.addGestureRecognizer(swipeDown)
         
         view.isOpaque = false

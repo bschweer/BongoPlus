@@ -67,7 +67,7 @@ public class Stop: NSObject, NSCoding
         return self.stopLongitude
     }*/
     
-    override public var hashValue: Int
+    override public var hash: Int
     {
         return stopLatitude.hashValue ^ stopLongitude.hashValue &* 16777619
     }

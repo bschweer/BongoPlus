@@ -10,11 +10,11 @@ import Foundation
 
 public class BongoAPI
 {
-    private static let prefix = "https://api.ebongo.org/"
+    private static let baseUrl = "https://api.ebongo.org/"
     private static let apiKey = "api_key=XXXX"
     
-    private static let allRoutesURL: String = prefix + "routelist?" + apiKey
-    private static let allStopsURL: String = prefix + "stoplist?" + apiKey
+    private static let allRoutesURL: String = baseUrl + "routelist?" + apiKey
+    private static let allStopsURL: String = baseUrl + "stoplist?" + apiKey
 
     
     private static var allRoutes = [Route]()
@@ -106,7 +106,7 @@ public class BongoAPI
     
     public static func getRouteInfo(agency: String, routeID: Int, completion:  @escaping (_ routeInfo: RouteInfo) -> ())
     {
-        let url = prefix + "route?agency=" + agency + "&route=\(routeID)&" + apiKey
+        let url = baseUrl + "route?agency=" + agency + "&route=\(routeID)&" + apiKey
         makeRequest(url: url, completion: {
             dictionary in
             completion(JSONParser.getRouteInfo(jsonDictionary: dictionary))
@@ -123,7 +123,7 @@ public class BongoAPI
     
     public static func getPredictions(stopNumber: String, completion:  @escaping (_ predictions: [Prediction]) -> ())
     {
-        let url = prefix + "prediction?stopid=" + stopNumber + "&" + apiKey
+        let url = baseUrl + "prediction?stopid=" + stopNumber + "&" + apiKey
         makeRequest(url: url, completion: {
             dictionary in
             completion(JSONParser.getPredictions(jsonDictionary: dictionary))

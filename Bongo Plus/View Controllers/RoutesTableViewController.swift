@@ -20,7 +20,7 @@ class RoutesTableViewController: UITableViewController
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Routes"
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.separatorColor = UIColor.clear
         self.tableView.tableFooterView = UIView()
         

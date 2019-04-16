@@ -57,8 +57,8 @@ class BongoLocationManager
     public static func centerMapOnLocation(map: MKMapView, location: CLLocation, animated: Bool)
     {
         let regionRadius: CLLocationDistance = 1200
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                  regionRadius, regionRadius)
+        let coordinateRegion = MKCoordinateRegion.init(center: location.coordinate,
+                                                                  latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
         map.setRegion(coordinateRegion, animated: animated)
     }
 }

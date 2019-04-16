@@ -153,8 +153,8 @@ class RouteInfoTableViewController: UIViewController, UITableViewDelegate, UITab
     func centerMapOnLocation(location: CLLocation)
     {
         let regionRadius: CLLocationDistance = 8000
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                  regionRadius, regionRadius)
+        let coordinateRegion = MKCoordinateRegion.init(center: location.coordinate,
+                                                                  latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
         theMap.setRegion(coordinateRegion, animated: true)
     }
     
@@ -200,7 +200,7 @@ class RouteInfoTableViewController: UIViewController, UITableViewDelegate, UITab
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView?.canShowCallout = true
             
-            let infoButton = UIButton(type: UIButtonType.detailDisclosure)
+            let infoButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
             pinView!.rightCalloutAccessoryView = infoButton as UIView
         }
         else
@@ -258,7 +258,7 @@ class RouteInfoTableViewController: UIViewController, UITableViewDelegate, UITab
     private func showRoute()
     {
         let polyLine = MKPolyline(coordinates: (selectedRouteInfo?.getRoutePath())!, count: (selectedRouteInfo?.getRoutePath().count)!)
-        theMap.add(polyLine, level: MKOverlayLevel.aboveLabels)
+        theMap.addOverlay(polyLine, level: MKOverlayLevel.aboveLabels)
     }
 
     func numberOfSections(in tableView: UITableView)->Int

@@ -93,22 +93,3 @@ public class JSONParser
         return predictions
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
